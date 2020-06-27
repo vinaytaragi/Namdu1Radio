@@ -1,0 +1,2 @@
+copy folder named media uploads folderto var/www/html 
+sudo chown -R pi:www-data /var/www/html/
