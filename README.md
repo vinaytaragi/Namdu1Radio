@@ -5,8 +5,11 @@
 
 2. Open "autostart" form your favourite editor (file path: /home/pi/.config/lxsession/LXDE-pi)
    Delete the "@python /home/pi/Documents/python_script/lappi.py &" line and add the below lines
+   
    @python /home/pi/Documents/Namdu1Radio/mountdrive.py &
+   
    @python /home/pi/Documents/Namdu1Radio/FileUpld2Gdrive.py &
+   
    @python /home/pi/Documents/Namdu1Radio/MultiCat_Radio.py &
    
 # Python Files info 
