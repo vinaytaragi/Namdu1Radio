@@ -1,7 +1,9 @@
 #  Welcome to Namdu1Radio 
 
 # Basic settings before starting Pi
-1. Open "autostart" form your favourite editor (file path: /home/pi/.config/lxsession/LXDE-pi)
+1. Clone the repository to this path "/home/pi/Documents/"
+
+2. Open "autostart" form your favourite editor (file path: /home/pi/.config/lxsession/LXDE-pi)
    Delete the "@python /home/pi/Documents/python_script/lappi.py &" line and add the below lines
    @python /home/pi/Documents/Namdu1Radio/mountdrive.py &
    @python /home/pi/Documents/Namdu1Radio/FileUpld2Gdrive.py &
