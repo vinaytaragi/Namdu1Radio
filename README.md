@@ -1,2 +1,15 @@
-# Namdu1Radio
-We believe in branching out our team as much as possible, in order to reach out to as many as possible. We also use open source resources, which gives contributors complete independence over their career growth. For further information on how to be a part of  Namma School Radio, do write to us at nammaschoolradio18@gmail.com
+#  Welcome to Namdu1Radio 
+
+# Basic settings before starting Pi
+1. Open "autostart" form your favourite editor (file path: /home/pi/.config/lxsession/LXDE-pi)
+   Delete the "@python /home/pi/Documents/python_script/lappi.py &" line and add the below lines
+   @python /home/pi/Documents/Namdu1Radio/mountdrive.py &
+   @python /home/pi/Documents/Namdu1Radio/FileUpld2Gdrive.py &
+   @python /home/pi/Documents/Namdu1Radio/MultiCat_Radio.py &
+   
+# Python Files info 
+  mountdrive.py -> Is used for mounting the google drive automatically on boot
+  FileUpld2Gdrive.py -> Is used to upload a file to localserver/google drive/pendrive on boot
+  MultiCat_Radio.py -> Is used to record,play the radio for different categories. Currently we are supoorting recording of 9 different categories. This pyhton file called   automatically on boot.
+  
+Please refer the "Namdu1radio_HSD.doc" for more detailed info.
