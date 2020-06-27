@@ -16,4 +16,4 @@
   
   MultiCat_Radio.py -> Is used to record,play the radio for different categories. Currently we are supoorting recording of 9 different categories. This pyhton file called   automatically on boot.
   
-Please refer the "Namdu1radio_HSD.doc" for more detailed info.
+Please refer the "Namdu1radio_HSD.doc" for more detailed info..
