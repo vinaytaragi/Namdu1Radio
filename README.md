@@ -8,8 +8,10 @@
    @python /home/pi/Documents/Namdu1Radio/MultiCat_Radio.py &
    
 # Python Files info 
-  mountdrive.py -> Is used for mounting the google drive automatically on boot
-  FileUpld2Gdrive.py -> Is used to upload a file to localserver/google drive/pendrive on boot
+  mountdrive.py -> Is used for mounting the google drive automatically on boot.
+  
+  FileUpld2Gdrive.py -> Is used to upload a file to localserver/google drive/pendrive on boot.
+  
   MultiCat_Radio.py -> Is used to record,play the radio for different categories. Currently we are supoorting recording of 9 different categories. This pyhton file called   automatically on boot.
   
 Please refer the "Namdu1radio_HSD.doc" for more detailed info.
