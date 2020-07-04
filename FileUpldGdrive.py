@@ -3,12 +3,12 @@
 #         This script will be invoked on every boot
 #
 # @ver: 1.0
-#---------------------------------------------------------------#
-# **   * **** **   ** ***  *  *  **  ****  **** ***  ***** **** #
-# * *  * *  * * * * * *  * *  * * *  *   * *  * *  *   *   *  * #
-# *  * * **** *  *  * *  * *  *   *  ****  **** *  *   *   *  * #
-# *   ** *  * *     * ***  ****  *** *    **  * ***  ***** **** #
-#---------------------------------------------------------------#
+#----------------------------------------------------------------#
+# ##   # #### ##   ## ###  #  #  ##  ####   #### ###  ##### #### #
+# # #  # #  # # # # # #  # #  # # #  #   #  #  # #  #   #   #  # #
+# #  # # #**# #  #  # #  # #  #   #  ####   #### #  #   #   #  # #
+# #   ## #  # #     # ###  ####  ### #    # #  # ###  ##### #### #
+#----------------------------------------------------------------#
 # *** Libraries *** #
 import RPi.GPIO as GPIO
 from gpiozero import LED, Button
@@ -20,10 +20,12 @@ import wave
 import contextlib
 from datetime import datetime
 from subprocess import check_output
+import shutil
 
 
 # setting folder paths
 projectpath =  os.path.split(os.path.realpath(__file__))[0]
+audioguidepath = projectpath + "/audio-alert"
 #local categories .wav file save path
 recordingpath1to9 = projectpath + "/recordings/cat"
 recordingpathcat1 = projectpath + "/recordings/cat1"
@@ -35,6 +37,14 @@ recordingpathcat6 = projectpath + "/recordings/cat6"
 recordingpathcat7 = projectpath + "/recordings/cat7"
 recordingpathcat8 = projectpath + "/recordings/cat8"
 recordingpathcat9 = projectpath + "/recordings/cat9"
+
+''' *** Global variables *** '''
+penDet = False
+#destination path - Do not change the path
+destpath_gdrive = "/home/pi/mnt/gdrive/cat" 
+# network verification variables
+remote_server = "www.google.com"
+local_server = "192.168.1.50"
 
 ''' *** Global Functions *** '''
 '''
@@ -49,9 +59,9 @@ def is_connected(network):
     except:
         return False
 
-		
+        
 ''' 
-	To check if wifi is local network
+    To check if wifi is local network
 '''        
 def is_onradio():
     try:
@@ -61,57 +71,63 @@ def is_onradio():
         return False
 
 '''
+    Macro for playing audio instructions - to keep the code simple
+'''
+def aplay(filename):
+    os.system("aplay -D plughw:CARD=0,DEV=0 "+audioguidepath+"/"+filename)
+
+'''
     Function to get the name of the pendrive connected
 '''    
 def getDevName():
     '''The below code to identify the pendrive folder name - Start'''
-    devlst = "ls /media/pi > /home/pi/Documents/python_script/usbs.txt"
-    file1 = open('usbs.txt', 'r')
+    os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
+    os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
+    file1 = open("/home/pi/Documents/Namdu1Radio/usbs/usbs.txt", "r")
     Lines = file1.readlines()
     # Strips the newline character
     for line in Lines:
         line = line.rstrip("\n")
         if (line == '7022-5CC71'):
             penDet = False
+            var = line
             #print(line)
             #break;
         elif (line == '7022-5CC72'):
             penDet = False
+            var = line
             #print(line)
             #break;
         elif (line == '7022-5CC7'):
             penDet = False
+            var = line
             #print(line)
         else:
             var = line
             penDet = True
             print("Pendrive name:",var)
     return var
-	
-#destination path - Do not change the path
-destpath_gdrive = "/home/pi/mnt/gdrive/cat" 
-# network verification variables
-remote_server = "www.google.com"
-local_server = "192.168.1.50"
-time.sleep(5)
 
-while 1:
+
+while True:
     #pendrive name
     devname =  getDevName()
-    if penDet == True: 
+    if penDet == True:
         #update the destination path  
-        destpath_pdrive = r"/media/pi/"+devname+r"/cat"	
+        destpath_pdrive = r"/media/pi/"+devname+r"/cat" 
         rv1 = subprocess.call("grep -qs '/media/pi' /proc/mounts", shell=True)
         rv2 = subprocess.call("mount | grep /media/pi", shell=True)
-	# Get list of files in a directory
+        penDet = False
+    # Get list of files in a directory
     for x in range(1, 10):
         #src path
         localpaths = recordingpath1to9+str(x)
         #dst path
         destpath = destpath_gdrive+str(x)
-		destpath_pend = destpath_pdrive+str(x)
+        if penDet == True:
+            destpath_pend = destpath_pdrive+str(x)
         print(localpaths)
-        print("for loop x=%d",x)
+        #print("for loop x=%d",x)
         upfiles = os.listdir(localpaths)
         if not upfiles:
             #os.system("pkill -9 aplay")
@@ -155,7 +171,7 @@ while 1:
             if is_onradio() and is_connected(local_server):
                 #os.system("pkill -9 aplay")
                 print ("uploading to local server")
-                aplay("sUploadinglocalserver.wav")
+                #aplay("sUploadinglocalserver.wav")
                 for i in upfiles:
                     #os.system("pkill -9 aplay")
                     if x==1:
@@ -193,43 +209,44 @@ while 1:
                 #os.system("pkill -9 aplay")
                 #aplay("sUploadinginternet.wav")
                 for i in upfiles:
-                #os.system("pkill -9 aplay")
-                if x==1:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat1.wav")
-                elif x==2:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat2.wav")
-                elif x==3:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat3.wav")
-                elif x==4:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat4.wav")
-                elif x==5:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat5.wav")
-                elif x==6:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat6.wav")
-                elif x==7:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat7.wav")
-                elif x==8:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat8.wav")
-                elif x==9:
-                    print("uploading to internet cat",x)
-                    #aplay("sUploadingcat9.wav")
+                    os.system("pkill -9 aplay")
+                    if x==1:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat1.wav")
+                    elif x==2:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat2.wav")
+                    elif x==3:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat3.wav")
+                    elif x==4:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat4.wav")
+                    elif x==5:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat5.wav")
+                    elif x==6:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat6.wav")
+                    elif x==7:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat7.wav")
+                    elif x==8:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat8.wav")
+                    elif x==9:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat9.wav")
                 #Upload the file to respective category in google drive
-                src_Path = 'rclone move'+" "+localpaths+"/"+i+" "+destpath+"/" 
+                    src_Path = 'rclone move'+" "+localpaths+"/"+i+" "+destpath+"/" 
                 #dst_Path = destpath+"i"
-                print(src_Path)
+                    print(src_Path)
                 #print(dst_Path)
-                os.system(src_Path)
-                print ("upload success !!!")
-                #os.system("pkill -9 aplay")
-                #aplay("Uploaded.wav")				
+                    os.system(src_Path)
+                    print ("upload success !!!")
+                    #os.system("pkill -9 aplay")
+                    #aplay("Uploaded.wav")
+                    time.sleep(0.1)
             elif rv1 == 0:
                 print("Pendrive detected")
                 #aplay("pendrivedetected.wav")
@@ -244,6 +261,5 @@ while 1:
                     shutil.copy(src, dst)                        
                     print ("Files copied to pendrive successfully !!!")                                
             else:
-                #os.system("pkill -9 aplay")
                 print("No internet!!! connection to upload to Gdrive!")
                 #aplay("Nointernet.wav")        

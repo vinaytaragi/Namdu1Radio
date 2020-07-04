@@ -4,12 +4,12 @@
 #         LED's  used for indicating respective category
 #
 # @ver: 1.0
-#---------------------------------------------------------------#
-# **   * **** **   ** ***  *  *  **  ****  **** ***  ***** **** #
-# * *  * *  * * * * * *  * *  * * *  *   * *  * *  *   *   *  * #
-# *  * * **** *  *  * *  * *  *   *  ****  **** *  *   *   *  * #
-# *   ** *  * *     * ***  ****  *** *    **  * ***  ***** **** #
-#---------------------------------------------------------------#
+#----------------------------------------------------------------#
+# ##   # #### ##   ## ###  #  #  ##  ####   #### ###  ##### #### #
+# # #  # #  # # # # # #  # #  # # #  #   #  #  # #  #   #   #  # #
+# #  # # #**# #  #  # #  # #  #   #  ####   #### #  #   #   #  # #
+# #   ## #  # #     # ###  ####  ### #    # #  # ###  ##### #### #
+#----------------------------------------------------------------#
 # *** Libraries *** #
 import RPi.GPIO as GPIO
 from gpiozero import LED, Button
@@ -98,7 +98,7 @@ def is_onradio():
     Macro for playing audio instructions - to keep the code simple
 '''
 def aplay(filename):
-    os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/"+filename)
+    os.system("aplay -D plughw:CARD=0,DEV=0 "+audioguidepath+"/"+filename)
 
 '''
     For the given path, get the List of all files in the directory tree 
@@ -125,22 +125,26 @@ def getListOfFiles(dirName):
 '''    
 def getDevName():
     '''The below code to identify the pendrive folder name - Start'''
-    devlst = "ls /media/pi > /home/pi/Documents/python_script/usbs.txt"
-    file1 = open('usbs.txt', 'r')
+    os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs1.txt')
+    os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs1.txt')
+    file1 = open("/home/pi/Documents/Namdu1Radio/usbs1.txt", "r")
     Lines = file1.readlines()
     # Strips the newline character
     for line in Lines:
         line = line.rstrip("\n")
         if (line == '7022-5CC71'):
             penDet = False
+            var = line
             #print(line)
             #break;
         elif (line == '7022-5CC72'):
             penDet = False
+            var = line
             #print(line)
             #break;
         elif (line == '7022-5CC7'):
             penDet = False
+            var = line
             #print(line)
         else:
             var = line
@@ -197,7 +201,9 @@ GPIO.setmode(GPIO.BCM)
 
 #Pi started indication audio
 print("pi Started")
+os.system("aplay -D plughw:CARD=0,DEV=0 "+audioguidepath+"/lappiready.wav &")
 aplay("lappiready.wav")
+time.sleep(0.5)
 
 while True:
     print("pi Running")
@@ -241,6 +247,7 @@ while True:
     if penDet == True:    
         rv1 = subprocess.call("grep -qs '/media/pi' /proc/mounts", shell=True)
         rv2 = subprocess.call("mount | grep /media/pi", shell=True)
+        penDet = False
     ''' if button1 is pressed - Category 1 functionality button '''
     if but1.is_pressed:
         print("button1 pressed")
@@ -295,7 +302,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat1.wav &")
+                        aplay("Cat1.wav")
                         time.sleep(0.4)
                         os.system("killall chromium-browser")
                         src_renamPath = r'/var/www/html/indexcat1.php'
@@ -364,7 +371,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat2.wav &")
+                        aplay("Cat2.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -429,7 +436,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat3.wav &")
+                        aplay("Cat3.wav &")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -494,7 +501,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat4.wav &")
+                        aplay("Cat4.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -560,7 +567,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat5.wav &")
+                        aplay("Cat5.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -627,7 +634,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat6.wav &")
+                        aplay("Cat6.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -693,7 +700,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat7.wav &")
+                        aplay("Cat7.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -760,7 +767,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat8.wav &")
+                        aplay("Cat8.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
@@ -826,7 +833,7 @@ while True:
                     else:
                         os.system("pkill -9 aplay")
                         time.sleep(0.4)
-                        os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/Cat9.wav &")
+                        aplay("Cat9.wav")
                         time.sleep(0.4)
                         os.system("pkill -o chromium")
                         os.system("killall chromium-browser")
