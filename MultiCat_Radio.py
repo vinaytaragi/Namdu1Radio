@@ -125,9 +125,9 @@ def getListOfFiles(dirName):
 '''    
 def getDevName():
     '''The below code to identify the pendrive folder name - Start'''
-    os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs1.txt')
-    os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs1.txt')
-    file1 = open("/home/pi/Documents/Namdu1Radio/usbs1.txt", "r")
+    os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs/usbs1.txt')
+    os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs/usbs1.txt')
+    file1 = open("/home/pi/Documents/Namdu1Radio/usbs/usbs1.txt", "r")
     Lines = file1.readlines()
     # Strips the newline character
     for line in Lines:
