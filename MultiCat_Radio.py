@@ -850,53 +850,41 @@ while True:
         print("buttons 10 pressed")
         previousTime = time.time()
         while but10.is_pressed:
-            #Check if the button is pressed for > 2sec
-            if time.time() - previousTime > 2.0:
-                if but1.is_pressed or but2.is_pressed or but3.is_pressed \
-                or but4.is_pressed or but5.is_pressed or but6.is_pressed \
-                or but7.is_pressed or but8.is_pressed or but9.is_pressed:
-                    # if button2 is also pressed and held, then shutdown the Pi
-                    shutdownPi()
-                # if the button is pressed for more than two seconds, then longpress is True
-                longpress = True
-                print("buttons 10 long pressed")
-                time.sleep(0.5)
-                print("button 10 short pressed")
-                if nammaschoolradio:
+            if nammaschoolradio:
+                os.system("pkill -9 aplay")
+                if playpause == True:
+                    playpause = False
+                    print ("echo closing radio !!!")
+                    os.system("killall chromium-browser")
                     os.system("pkill -9 aplay")
-                    if playpause == True:
-                        playpause = False
-                        print ("echo closing radio !!!")
-                        os.system("killall chromium-browser")
-                        os.system("pkill -9 aplay")
-                        time.sleep(0.2)
-                        aplay("radiostop.wav")
-                        break
-                    #Check whether the local server is connected    
-                    elif is_onradio() and is_connected(local_server):
-                        print ("starting namma school radio....from local server ")
-                        aplay("radiostart.wav")
-                        time.sleep(0.4)
-                        os.system("chromium-browser --app=http://"+local_server+" &")
-                        playpause = True
-                    # Check whether the internet is available to play from the website
-                    elif is_connected(remote_server):
-                        print ("starting namma school radio from internet")
-                        os.system("pkill -9 aplay")
-                        aplay("radiostart.wav")
-                        time.sleep(0.4)
-                        os.system("chromium-browser --app=https://www.namdu1radio.com/sadbhavana-radio &")                        
-                        playpause = True
-                    else:
-                        print ("Button10 general play started")
-                        os.system("pkill -9 aplay")
-                        aplay("radiostart.wav")
-                        src_renamPath = r'/var/www/html/index_original.php'
-                        dst_renamPath = r'/var/www/html/index.php'
-                        shutil.copy(src_renamPath, dst_renamPath)
-                        #Starts playing mp3 from .upload folder
-                        os.system("chromium-browser localhost &")
-                        time.sleep(0.2)
-                        playpause = True     
+                    time.sleep(0.2)
+                    aplay("radiostop.wav")
+                    break
+                #Check whether the local server is connected    
+                elif is_onradio() and is_connected(local_server):
+                    print ("starting namma school radio....from local server ")
+                    aplay("radiostart.wav")
+                    time.sleep(0.4)
+                    os.system("chromium-browser --app=http://"+local_server+" &")
+                    playpause = True
+                # Check whether the internet is available to play from the website
+                elif is_connected(remote_server):
+                    print ("starting namma school radio from internet")
+                    os.system("pkill -9 aplay")
+                    aplay("radiostart.wav")
+                    time.sleep(0.4)
+                    os.system("chromium-browser --app=https://www.namdu1radio.com/sadbhavana-radio &")                        
+                    playpause = True
+                else:
+                    print ("Button10 general play started")
+                    os.system("pkill -9 aplay")
+                    aplay("radiostart.wav")
+                    src_renamPath = r'/var/www/html/index_original.php'
+                    dst_renamPath = r'/var/www/html/index.php'
+                    shutil.copy(src_renamPath, dst_renamPath)
+                    #Starts playing mp3 from .upload folder
+                    os.system("chromium-browser localhost &")
+                    time.sleep(0.2)
+                    playpause = True    
     
     
