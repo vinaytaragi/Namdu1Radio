@@ -37,7 +37,7 @@ recordingpathcat6 = projectpath + "/recordings/cat6"
 recordingpathcat7 = projectpath + "/recordings/cat7"
 recordingpathcat8 = projectpath + "/recordings/cat8"
 recordingpathcat9 = projectpath + "/recordings/cat9"
-recordingpathcat10 = projectpath + "/recordings/cat9"
+recordingpathcat10 = projectpath + "/recordings/cat10"
 
 #.upload categories .mp3 file save path
 uploadpath = "/var/www/html/.upload"
