@@ -60,6 +60,7 @@ recordingpathcat6 = projectpath + "/recordings/cat6"
 recordingpathcat7 = projectpath + "/recordings/cat7"
 recordingpathcat8 = projectpath + "/recordings/cat8"
 recordingpathcat9 = projectpath + "/recordings/cat9"
+recordingpathcat9 = projectpath + "/recordings/cat10"
 #.upload categories .mp3 file save path
 uploadpath = "/var/www/html/.upload"
 uploadpath1to9 = uploadpath + "/cat"
@@ -182,6 +183,7 @@ led6 = LED(7)  #GPIO7  - LED6
 led7 = LED(12) #GPIO12 - LED7
 led8 = LED(16) #GPIO16 - LED8
 led9 = LED(20) #GPIO20 - LED9
+led10 = LED(21) #GPIO21 - LED10
 
 #GPIO's config:
 #-------------
@@ -203,7 +205,7 @@ GPIO.setmode(GPIO.BCM)
 print("pi Started")
 os.system("aplay -D plughw:CARD=0,DEV=0 "+audioguidepath+"/lappiready.wav &")
 aplay("lappiready.wav")
-time.sleep(0.5)
+time.sleep(1.0)
 
 while True:
     print("pi Running")
@@ -850,7 +852,35 @@ while True:
         print("buttons 10 pressed")
         previousTime = time.time()
         while but10.is_pressed:
-            if nammaschoolradio:
+            #Check if the button is pressed for > 2sec
+            if time.time() - previousTime > 2.0:
+                if but1.is_pressed or but2.is_pressed or but3.is_pressed \
+                or but4.is_pressed or but5.is_pressed or but6.is_pressed \
+                or but7.is_pressed or but8.is_pressed or but9.is_pressed :
+                    #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
+                    shutdownPi()
+                # if the button is pressed for more than two seconds, then longpress is True
+                longpress = True
+                time.sleep(0.5)
+                if longpress:
+                    led10.on()
+                    os.system("killall chromium-browser")
+                    time.sleep(0.4)
+                    os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+                    aplay("beep.wav")
+                    # records with 48000 quality
+                    os.system("arecord "+recordingpathcat10+"/recorded_audio.wav -D sysdefault:CARD=1 -f dat & ") 
+                    # scan for button press to stop recording
+                    but10.wait_for_press()
+                    os.system("pkill -9 arecord")
+                    aplay("Cat10_stop.wav")
+                    # converting recorded audio to mp3 and rename with date and time of recording
+                    os.system("lame -b 320 "+recordingpathcat9+"/recorded_audio.wav "+recordingpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+                    os.system("rm "+recordingpathcat10)#remove the recorded file
+                    longpress = False
+                    led10.off()
+                    break            
+            else:
                 os.system("pkill -9 aplay")
                 if playpause == True:
                     playpause = False
