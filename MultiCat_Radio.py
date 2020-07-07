@@ -197,7 +197,7 @@ but6 = Button(11) #11 - cat6
 but7 = Button(5)  #5  - cat7
 but8 = Button(6)  #6  - cat8
 but9 = Button(13) #13 - cat9
-but10 = Button(19)#19 - cat10
+but10 = Button(26)#26 - cat10
 
 # *** Setting up GPIO of Pi *** #
 GPIO.setmode(GPIO.BCM)
