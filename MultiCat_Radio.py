@@ -60,7 +60,7 @@ recordingpathcat6 = projectpath + "/recordings/cat6"
 recordingpathcat7 = projectpath + "/recordings/cat7"
 recordingpathcat8 = projectpath + "/recordings/cat8"
 recordingpathcat9 = projectpath + "/recordings/cat9"
-recordingpathcat9 = projectpath + "/recordings/cat10"
+recordingpathcat10 = projectpath + "/recordings/cat10"
 #.upload categories .mp3 file save path
 uploadpath = "/var/www/html/.upload"
 uploadpath1to9 = uploadpath + "/cat"
@@ -73,6 +73,7 @@ uploadpathcat6 = uploadpath + "/cat6"
 uploadpathcat7 = uploadpath + "/cat7"
 uploadpathcat8 = uploadpath + "/cat8"
 uploadpathcat9 = uploadpath + "/cat9"
+uploadpathcat10 = uploadpath + "/cat10"
 
 ''' *** Global Functions *** '''
 '''
@@ -280,7 +281,7 @@ while True:
                     os.system("pkill -9 aplay")
                     aplay("Cat1_stop.wav")
                     os.system("lame -b 320 "+recordingpathcat1+"/recorded_audio.wav "+recordingpathcat1+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat1) #remove the recorded file
+                    os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
                     longpress = False
                     led1.off()
                     break
@@ -349,7 +350,7 @@ while True:
                     print("button2 stopped recording")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat2+"/recorded_audio.wav "+recordingpathcat2+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat2)#remove the recorded file
+                    os.system("rm "+recordingpathcat2+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led2.off()
                     break
@@ -414,7 +415,7 @@ while True:
                     aplay("Cat3_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat3+"/recorded_audio.wav "+recordingpathcat3+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat3)#remove the recorded file
+                    os.system("rm "+recordingpathcat3+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led3.off()
                     break
@@ -479,7 +480,7 @@ while True:
                     aplay("Cat4_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat4+"/recorded_audio.wav "+recordingpathcat4+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat4)#remove the recorded file
+                    os.system("rm "+recordingpathcat4+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led4.off()
                     break
@@ -545,7 +546,7 @@ while True:
                     aplay("Cat5_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat5+"/recorded_audio.wav "+recordingpathcat5+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat5)#remove the recorded file
+                    os.system("rm "+recordingpathcat5+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led5.off()
                     break
@@ -592,7 +593,7 @@ while True:
                 if but1.is_pressed or but2.is_pressed or but3.is_pressed \
                 or but4.is_pressed or but5.is_pressed or but7.is_pressed \
                 or but8.is_pressed or but9.is_pressed :
-                    #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
+                    #if any of the buttons 1 to 5,7,8,9 is also pressed and held, then shutdown the Pi
                     shutdownPi()
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
@@ -611,7 +612,7 @@ while True:
                     aplay("Cat6_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat6+"/recorded_audio.wav "+recordingpathcat6+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    #os.system("rm "+recordingpathcat6)#remove the recorded file
+                    os.system("rm "+recordingpathcat6+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led6.off()
                     break
@@ -658,7 +659,7 @@ while True:
                 if ((but1.is_pressed) or (but2.is_pressed) or (but3.is_pressed) or
                 (but4.is_pressed) or (but5.is_pressed) or (but6.is_pressed) or
                 (but8.is_pressed) or (but9.is_pressed)):
-                    #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
+                    #if any of the buttons 1 to 6,8,9 is also pressed and held, then shutdown the Pi
                     shutdownPi()
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
@@ -677,7 +678,7 @@ while True:
                     aplay("Cat7_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat7+"/recorded_audio.wav "+recordingpathcat7+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat7)#remove the recorded file
+                    os.system("rm "+recordingpathcat7+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led7.off()
                     break
@@ -725,7 +726,7 @@ while True:
                 if but1.is_pressed or but2.is_pressed or but3.is_pressed \
                 or but4.is_pressed or but5.is_pressed or but6.is_pressed \
                 or but7.is_pressed or but9.is_pressed :
-                    #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
+                    #if any of the buttons 1 to 7 & 9 is also pressed and held, then shutdown the Pi
                     shutdownPi()
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
@@ -744,7 +745,7 @@ while True:
                     aplay("Cat8_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat8+"/recorded_audio.wav "+recordingpathcat8+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat8)#remove the recorded file
+                    os.system("rm "+recordingpathcat8+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led8.off()
                     break
@@ -792,7 +793,7 @@ while True:
                 if but1.is_pressed or but2.is_pressed or but3.is_pressed \
                 or but4.is_pressed or but5.is_pressed or but6.is_pressed \
                 or but7.is_pressed or but8.is_pressed :
-                    #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
+                    #if any of the buttons 1 to 8 is also pressed and held, then shutdown the Pi
                     shutdownPi()
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
@@ -811,7 +812,7 @@ while True:
                     aplay("Cat9_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
                     os.system("lame -b 320 "+recordingpathcat9+"/recorded_audio.wav "+recordingpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat9)#remove the recorded file
+                    os.system("rm "+recordingpathcat9+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led9.off()
                     break
@@ -857,7 +858,7 @@ while True:
                 if but1.is_pressed or but2.is_pressed or but3.is_pressed \
                 or but4.is_pressed or but5.is_pressed or but6.is_pressed \
                 or but7.is_pressed or but8.is_pressed or but9.is_pressed :
-                    #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
+                    #if any of the buttons 1 to 9 is also pressed and held, then shutdown the Pi
                     shutdownPi()
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
@@ -867,7 +868,7 @@ while True:
                     os.system("killall chromium-browser")
                     time.sleep(0.4)
                     os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-                    aplay("beep.wav")
+                    aplay("beep_cat10.wav")
                     # records with 48000 quality
                     os.system("arecord "+recordingpathcat10+"/recorded_audio.wav -D sysdefault:CARD=1 -f dat & ") 
                     # scan for button press to stop recording
@@ -875,8 +876,8 @@ while True:
                     os.system("pkill -9 arecord")
                     aplay("Cat10_stop.wav")
                     # converting recorded audio to mp3 and rename with date and time of recording
-                    os.system("lame -b 320 "+recordingpathcat9+"/recorded_audio.wav "+recordingpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-                    os.system("rm "+recordingpathcat10)#remove the recorded file
+                    os.system("lame -b 320 "+recordingpathcat10+"/recorded_audio.wav "+recordingpathcat10+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+                    os.system("rm "+recordingpathcat10+"/recorded_audio.wav")#remove the recorded file
                     longpress = False
                     led10.off()
                     break            
@@ -892,7 +893,9 @@ while True:
                     break
                 #Check whether the local server is connected    
                 elif is_onradio() and is_connected(local_server):
+                    os.system("pkill -9 aplay")
                     print ("starting namma school radio....from local server ")
+                    time.sleep(0.4)
                     aplay("radiostart.wav")
                     time.sleep(0.4)
                     os.system("chromium-browser --app=http://"+local_server+" &")
@@ -901,12 +904,13 @@ while True:
                 elif is_connected(remote_server):
                     print ("starting namma school radio from internet")
                     os.system("pkill -9 aplay")
+                    time.sleep(0.4)
                     aplay("radiostart.wav")
                     time.sleep(0.4)
                     os.system("chromium-browser --app=https://www.namdu1radio.com/sadbhavana-radio &")                        
                     playpause = True
                 else:
-                    print ("Button10 general play started")
+                    print ("Button10 general playback started")
                     os.system("pkill -9 aplay")
                     aplay("radiostart.wav")
                     src_renamPath = r'/var/www/html/index_original.php'

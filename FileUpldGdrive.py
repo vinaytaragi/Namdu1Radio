@@ -37,6 +37,7 @@ recordingpathcat6 = projectpath + "/recordings/cat6"
 recordingpathcat7 = projectpath + "/recordings/cat7"
 recordingpathcat8 = projectpath + "/recordings/cat8"
 recordingpathcat9 = projectpath + "/recordings/cat9"
+recordingpathcat10 = projectpath + "/recordings/cat9"
 
 #.upload categories .mp3 file save path
 uploadpath = "/var/www/html/.upload"
@@ -50,6 +51,7 @@ uploadpathcat6 = uploadpath + "/cat6"
 uploadpathcat7 = uploadpath + "/cat7"
 uploadpathcat8 = uploadpath + "/cat8"
 uploadpathcat9 = uploadpath + "/cat9"
+uploadpathcat10 = uploadpath + "/cat9"
 
 ''' *** Global variables *** '''
 penDet = False
@@ -135,7 +137,7 @@ while True:
         rv2 = subprocess.call("mount | grep /media/pi", shell=True)
         penDet = False
     # Get list of files in a directory
-    for x in range(1, 10):
+    for x in range(1, 11):
         #src path
         localpaths = recordingpath1to9+str(x)
         #dst path
@@ -282,7 +284,7 @@ while True:
     ''' The following code for downloading files from Gdrive, pendrive to .upload folder '''                
     # Get list of files in a directory
     if is_connected(remote_server):
-        for y in range(1, 10):
+        for y in range(1, 11):
             #src path
             gdrivepath = gdrivepath_broadcast+str(y)
             #dst path
@@ -343,7 +345,7 @@ while True:
             print("Pendrive name:",getDevName)
             #os.system("pkill -9 aplay")
             #aplay("copytouploadfolder.wav")
-            for y in range(1,10):
+            for y in range(1,11):
                 #os.system("pkill -9 aplay")
                 #src path
                 pensrcpath = destpath_pdrive+str(y)
