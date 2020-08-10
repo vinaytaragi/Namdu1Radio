@@ -34,7 +34,7 @@ remote_server = "www.google.com"
 
 if is_connected(remote_server):
     if cntr == True:
-        os.system('rclone mount gdrive: $HOME/mnt/gdrive')
+        os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
         print("gdrive mounted")
         cntr = False
 else:

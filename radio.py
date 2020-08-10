@@ -63,6 +63,7 @@ cat7preview = False
 cat8preview = False
 cat9preview = False
 cat10preview = False
+gencatpreview = False
 # network verification variables
 remote_server = "www.google.com"
 local_server = "192.168.1.50" 
@@ -70,6 +71,7 @@ local_server = "192.168.1.50"
 # setting folder paths
 projectpath =  os.path.split(os.path.realpath(__file__))[0]
 audioguidepath = projectpath + "/audio-alert"
+previewaudioguidepath = projectpath + "/recordings"
 #local categories .wav file save path
 recordingpath1to9 = projectpath + "/recordings/cat"
 recordingpathcat1 = projectpath + "/recordings/cat1"
@@ -123,8 +125,20 @@ def is_onradio():
     Macro for playing audio instructions - to keep the code simple
 '''
 def aplay(filename):
-    os.system("aplay -D plughw:CARD=0,DEV=0 "+audioguidepath+"/"+filename+"&")
+    os.system("aplay -D plughw:CARD=2,DEV=0 "+audioguidepath+"/"+filename+ "&")
 
+'''
+    Macro for playing recorded audio
+'''
+def previewplay(filename):
+    os.system("aplay -D plughw:CARD=2,DEV=0 "+previewaudioguidepath+"/"+filename+ "&")
+    
+    '''
+    Macro for recording audio
+'''
+def arecord(filename):
+    os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav -D sysdefault:CARD=2 -f dat & ")
+    
 '''
     For the given path, get the List of all files in the directory tree 
 '''
@@ -217,12 +231,12 @@ while True:
     elif is_connected(remote_server) and cntr:
         print ("starting namma school radio from internet")
         os.system("pkill -9 aplay")
-        aplay("radiostart.wav")
-        time.sleep(3)
+        #time.sleep(3)
         os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
-        #time.sleep(10)
-        #os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
-        #time.sleep(20)
+        aplay("radiostart.wav")
+        time.sleep(3.0)
+        os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
+        time.sleep(5.0)
         cntr = False
         playpause = True
     elif cntr == True:
@@ -253,29 +267,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat1.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led1.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat1.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat1.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat1+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but1.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat1_stop.wav")
             print("Cat1 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat1+"/recorded_audio.wav "+recordingpathcat1+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat1+"/recorded_audio.wav "+uploadpathcat1+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat1+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat1+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat1+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat1playpause = True
@@ -286,7 +301,9 @@ while True:
             led1.on()
             pfiles = os.listdir(uploadpathcat1)
             if cat1preview == True:
+                cat1preview = False
                 print("Cat1 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat1playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -337,29 +354,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat2.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led2.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat2.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat2.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat2+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but2.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat2_stop.wav")
             print("Cat2 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat2+"/recorded_audio.wav "+recordingpathcat2+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat2+"/recorded_audio.wav "+uploadpathcat2+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat2+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat2+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat2+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat2playpause = True
@@ -370,7 +388,9 @@ while True:
             led2.on()
             pfiles = os.listdir(uploadpathcat2)
             if cat2preview == True:
+                cat2preview = False
                 print("Cat2 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat2playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -421,29 +441,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat3.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led3.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat3.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat3.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat3+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but3.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat3_stop.wav")
             print("Cat3 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat3+"/recorded_audio.wav "+recordingpathcat3+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat3+"/recorded_audio.wav "+uploadpathcat3+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat3+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat3+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat3+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat3playpause = True
@@ -454,7 +475,9 @@ while True:
             led3.on()
             pfiles = os.listdir(uploadpathcat3)
             if cat3preview == True:
+                cat3preview = False
                 print("Cat3 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat3playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -505,29 +528,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat4.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led4.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat4.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat4.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat4+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but4.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat4_stop.wav")
             print("Cat4 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat4+"/recorded_audio.wav "+recordingpathcat4+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat4+"/recorded_audio.wav "+uploadpathcat4+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat4+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat4+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat4+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat4playpause = True
@@ -538,7 +562,9 @@ while True:
             led4.on()
             pfiles = os.listdir(uploadpathcat4)
             if cat4preview == True:
+                cat4preview = False
                 print("Cat4 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat4playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -589,29 +615,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat5.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led5.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat5.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat5.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat5+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but5.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat5_stop.wav")
             print("Cat5 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat5+"/recorded_audio.wav "+recordingpathcat5+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat5+"/recorded_audio.wav "+uploadpathcat5+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat5+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat5+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat5+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat5playpause = True
@@ -622,7 +649,9 @@ while True:
             led5.on()
             pfiles = os.listdir(uploadpathcat5)
             if cat5preview == True:
+                cat5preview = False
                 print("Cat5 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat5playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -673,29 +702,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat6.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led6.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat6.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat6.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat6+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but6.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat6_stop.wav")
             print("Cat6 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat6+"/recorded_audio.wav "+recordingpathcat6+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat6+"/recorded_audio.wav "+uploadpathcat6+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat6+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat6+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat6+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat6playpause = True
@@ -706,7 +736,9 @@ while True:
             led6.on()
             pfiles = os.listdir(uploadpathcat6)
             if cat6preview == True:
+                cat6preview = False
                 print("Cat6 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat6playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -757,29 +789,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat7.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led7.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat7.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat7.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat7+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but7.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat7_stop.wav")
             print("Cat7 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat7+"/recorded_audio.wav "+recordingpathcat7+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat7+"/recorded_audio.wav "+uploadpathcat7+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat7+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat7+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat7+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat7playpause = True
@@ -790,7 +823,9 @@ while True:
             led7.on()
             pfiles = os.listdir(uploadpathcat7)
             if cat7preview == True:
+                cat7preview = False
                 print("Cat7 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat7playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -841,29 +876,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat8.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led8.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat8.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat8.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat8+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but8.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat8_stop.wav")
             print("Cat8 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat8+"/recorded_audio.wav "+recordingpathcat8+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat8+"/recorded_audio.wav "+uploadpathcat8+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat8+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat8+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat8+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat8playpause = True
@@ -874,7 +910,9 @@ while True:
             led8.on()
             pfiles = os.listdir(uploadpathcat8)
             if cat8preview == True:
+                cat8preview = False
                 print("Cat8 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat8playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -925,29 +963,30 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat9.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led9.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat9.wav")
-            time.sleep(3.0)
+            #time.sleep(0.4)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat9.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat9+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but9.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat9_stop.wav")
             print("Cat9 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat9+"/recorded_audio.wav "+recordingpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat9+"/recorded_audio.wav "+uploadpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat9+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat9+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat9playpause = True
@@ -958,7 +997,9 @@ while True:
             led9.on()
             pfiles = os.listdir(uploadpathcat9)
             if cat9preview == True:
+                cat9preview = False
                 print("Cat9 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat9playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -1009,29 +1050,29 @@ while True:
                     shutdownPi()
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                aplay("beep_cat10.wav")
+                #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
             led10.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_cat10.wav")
-            time.sleep(3.0)
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            #aplay("beep_cat10.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat10+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ") 
+            arecord("recorded_audio.wav") 
             # scan for button press to stop recording
             but10.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             aplay("Cat10_stop.wav")
             print("Cat10 recording stopped")
-            os.system("lame -b 320 "+recordingpathcat10+"/recorded_audio.wav "+recordingpathcat10+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("sudo lame -b 320 "+recordingpathcat10+"/recorded_audio.wav "+uploadpathcat10+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+recordingpathcat10+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav "+uploadpathcat10+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat10+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat10playpause = True
@@ -1042,7 +1083,9 @@ while True:
             led10.on()
             pfiles = os.listdir(uploadpathcat10)
             if cat10preview == True:
+                cat10preview = False
                 print("Cat10 preview stopped")
+                os.system("pkill -9 aplay")
             elif cat10playpause == True:
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
@@ -1096,7 +1139,8 @@ while True:
                     shutdownPi()
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                #break
+                aplay("beep_catgen.wav")
                 # if longpress is True, record audio after a 'beep'
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
@@ -1104,32 +1148,37 @@ while True:
             led11.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
-            time.sleep(0.4)
-            os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            aplay("beep_catgen.wav")
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
             print("Gencat recording started")
+            #aplay("beep_catgen.wav")
+            time.sleep(1.0)
             # records with 48000 quality
-            os.system("arecord "+recordingpathcat11+"/recorded_audio.wav -D sysdefault:CARD=0 -f dat & ")
+            arecord("recorded_audio.wav")
             # scan for button press to stop recording
             but11.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             time.sleep(0.4)
-            aplay("Catgen_stop.wav")
             print("Gencat recording stopped")
+            aplay("Catgen_stop.wav")
+            time.sleep(2.0)
             # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+recordingpathcat11+"/recorded_audio.wav " +recordingpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             #os.system("cp "+recordingpathcat10+"/recorded_audio.wav" +localplaypath+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".wav &")
-            os.system("sudo lame -b 320 "+recordingpathcat11+"/recorded_audio.wav " +uploadpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
+            os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +uploadpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             os.system("pkill -9 aplay")
-            os.system("aplay -D plughw:CARD=0,DEV=0 "+recordingpathcat11+"/recorded_audio.wav &")
+            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat10+"/recorded_audio.wav")#remove the recorded file
             longpress = False
+            gencatpreview = True
             led11.off()
             #break
         else:
-            os.system("pkill -9 aplay")
-            if playpause == True:
+            if gencatpreview == True:
+                gencatpreview = False
+                print("Gen cat preview stopped")
+                os.system("pkill -9 aplay")
+            elif playpause == True:
                 playpause = False
                 print ("echo closing radio !!!")
                 os.system("killall chromium-browser")
@@ -1155,10 +1204,9 @@ while True:
                 os.system("pkill -9 aplay")
                 os.system("pkill -o chromium")
                 os.system("killall chromium-browser")
-                time.sleep(0.4)
+                os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
                 aplay("radiostart.wav") 
-                time.sleep(0.4)
-                os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")                        
+                time.sleep(0.4)                        
                 playpause = True
             else:
                 print ("Button11 general playback started")
@@ -1169,6 +1217,6 @@ while True:
                 dst_renamPath = r'/var/www/html/index.php'
                 shutil.copy(src_renamPath, dst_renamPath)
                 #Starts playing mp3 from .upload folder
-                os.system("chromium-browser localhost &")
+                os.system("chromium-browser --kiosk localhost &")
                 time.sleep(0.2)
                 playpause = True

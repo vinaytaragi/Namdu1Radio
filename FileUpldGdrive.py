@@ -38,6 +38,7 @@ recordingpathcat7 = projectpath + "/recordings/cat7"
 recordingpathcat8 = projectpath + "/recordings/cat8"
 recordingpathcat9 = projectpath + "/recordings/cat9"
 recordingpathcat10 = projectpath + "/recordings/cat10"
+recordingpathgencat = projectpath + "/recordings/gencat"
 
 #.upload categories .mp3 file save path
 uploadpath = "/var/www/html/.upload"
@@ -51,14 +52,17 @@ uploadpathcat6 = uploadpath + "/cat6"
 uploadpathcat7 = uploadpath + "/cat7"
 uploadpathcat8 = uploadpath + "/cat8"
 uploadpathcat9 = uploadpath + "/cat9"
-uploadpathcat10 = uploadpath + "/cat9"
+uploadpathcat10 = uploadpath + "/cat10"
+uploadpathgencat = uploadpath + "/gencat"
 
 ''' *** Global variables *** '''
 penDet = False
+
 #destination path - Do not change the path
 destpath_gdrive = "/home/pi/mnt/gdrive/cat"
-
+destpath_gdrivegencat = "/home/pi/mnt/gdrive/gencat"
 gdrivepath_broadcast = "/home/pi/mnt/gdrive/Ready_To_Broadcast/cat"
+gdrivepath_broadcastgencat = "/home/pi/mnt/gdrive/Ready_To_Broadcast/gencat"
 # network verification variables
 remote_server = "www.google.com"
 local_server = "192.168.1.50"
@@ -97,6 +101,7 @@ def aplay(filename):
     Function to get the name of the pendrive connected
 '''    
 def getDevName():
+    ret = "Hello"
     '''The below code to identify the pendrive folder name - Start'''
     os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
     os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
@@ -107,24 +112,23 @@ def getDevName():
         line = line.rstrip("\n")
         if (line == '7022-5CC71'):
             penDet = False
-            var = line
+            ret = line
             #print(line)
             #break;
         elif (line == '7022-5CC72'):
             penDet = False
-            var = line
+            ret = line
             #print(line)
             #break;
         elif (line == '7022-5CC7'):
             penDet = False
-            var = line
+            ret = line
             #print(line)
         else:
-            var = line
+            ret = line
             penDet = True
-            print("Pendrive name:",var)
-    return var
-
+            print("Pendrive name:",ret)
+    return ret
 
 while True:
     ''' The following code for Uploading files to localserver or Gdrive or pendrive '''
@@ -132,12 +136,13 @@ while True:
     devname =  getDevName()
     if penDet == True:
         #update the destination path  
-        destpath_pdrive = r"/media/pi/"+devname+r"/cat" 
+        destpath_pdrive = r"/media/pi/"+devname+r"/cat"
+        destpath_pdrivegencat = r"/media/pi/"+devname+r"/gencat"
         rv1 = subprocess.call("grep -qs '/media/pi' /proc/mounts", shell=True)
         rv2 = subprocess.call("mount | grep /media/pi", shell=True)
         penDet = False
     # Get list of files in a directory
-    for x in range(1, 11):
+    for x in range(1, 12):
         #src path
         localpaths = recordingpath1to9+str(x)
         #dst path
@@ -146,7 +151,18 @@ while True:
             destpath_pend = destpath_pdrive+str(x)
         print(localpaths)
         #print("for loop x=%d",x)
-        upfiles = os.listdir(localpaths)
+        if not x==11:
+            upfiles = os.listdir(localpaths)
+        if x==11:
+            #src path
+            localpaths = recordingpathgencat
+            #dst path
+            destpath = destpath_gdrivegencat
+            if penDet == True:
+                destpath_pend = destpath_pdrivegencat
+            print(localpaths)
+            #print("for loop x=%d",x)
+            upfiles = os.listdir(localpaths)            
         if not upfiles:
             #os.system("pkill -9 aplay")
             if x==1:
@@ -185,6 +201,14 @@ while True:
                 print("No files to upload in cat",x)
                 #aplay("NothingToUploadcat9.wav")
                 continue
+            elif x==10:
+                print("No files to upload in cat",x)
+                #aplay("NothingToUploadcat10.wav")
+                continue
+            elif x==11:
+                print("No files to upload in cat",x)
+                #aplay("NothingToUploadgencat.wav")
+                continue
         else:
             if is_onradio() and is_connected(local_server):
                 #os.system("pkill -9 aplay")
@@ -218,7 +242,13 @@ while True:
                         #aplay("sUploadingcat8.wav")
                     elif x==9:
                         print("uploading to studio cat",x)
-                        #aplay("sUploadingcat9.wav")   
+                        #aplay("sUploadingcat9.wav")
+                    elif x==10:
+                        print("uploading to studio cat",x)
+                        #aplay("sUploadingcat10.wav")
+                    elif x==11:
+                        print("uploading to studio cat",x)
+                        #aplay("sUploadingencat.wav")                        
                     os.system("sshpass -p 'raspberry' rsync "+localpaths+"/"+i+" pi@"+local_server+":/home/pi/Documents/pock1/")
                     os.system("rm "+localpaths+"/"+i)
                 print ("upload success !!!")
@@ -255,6 +285,12 @@ while True:
                     elif x==9:
                         print("uploading to internet cat",x)
                         #aplay("sUploadingcat9.wav")
+                    elif x==10:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadingcat10.wav")
+                    elif x==11:
+                        print("uploading to internet cat",x)
+                        #aplay("sUploadinggencat.wav")                        
                 #Upload the file to respective category in google drive
                     src_Path = 'rclone move'+" "+localpaths+"/"+i+" "+destpath+"/" 
                 #dst_Path = destpath+"i"
@@ -284,11 +320,16 @@ while True:
     ''' The following code for downloading files from Gdrive, pendrive to .upload folder '''                
     # Get list of files in a directory
     if is_connected(remote_server):
-        for y in range(1, 11):
+        for y in range(1, 12):
             #src path
             gdrivepath = gdrivepath_broadcast+str(y)
             #dst path
             destpath_up = uploadpath+str(y)
+            if y==11:
+                #src path
+                gdrivepath = gdrivepath_broadcastgencat
+                #dst path
+                destpath_up = uploadpathgencat
             #print("for loop x=%d",y)
             dwnfiles = os.listdir(gdrivepath)
             if not dwnfiles:
@@ -329,6 +370,14 @@ while True:
                     print("No files to Download in cat",y)
                     #aplay("NothingToUploadcat9.wav")
                     continue
+                elif y==10:
+                    print("No files to Download in cat",y)
+                    #aplay("NothingToUploadcat10.wav")
+                    continue
+                elif y==11:
+                    print("No files to Download in cat",y)
+                    #aplay("NothingToUploadgencat.wav")
+                    continue                
             else:
                 for j in dwnfiles:
                     print("copying files to upload folder")
@@ -345,12 +394,17 @@ while True:
             print("Pendrive name:",getDevName)
             #os.system("pkill -9 aplay")
             #aplay("copytouploadfolder.wav")
-            for y in range(1,11):
+            for y in range(1,12):
                 #os.system("pkill -9 aplay")
                 #src path
                 pensrcpath = destpath_pdrive+str(y)
                 #dst path
                 updstpath = uploadpath1to9+str(y)
+                if y==11:
+                    #src path
+                    pensrcpath = destpath_pdrivegencat
+                    #dst path
+                    updstpath = uploadpathgencat
                 upfiles = os.listdir(pensrcpath)
                 if not upfiles:
                     #os.system("pkill -9 aplay")
@@ -390,6 +444,14 @@ while True:
                         print("No files to copy in cat",y)
                         #aplay("NothingToDownloadcat9.wav")
                         continue
+                    elif y==10:
+                        print("No files to copy in cat",y)
+                        #aplay("NothingToDownloadcat10.wav")
+                        continue
+                    elif y==11:
+                        print("No files to copy in cat",y)
+                        #aplay("NothingToDownloadgencat.wav")
+                        continue                    
                 else:
                     for j in dwnfiles:
                         #os.system("pkill -9 aplay")
@@ -419,7 +481,12 @@ while True:
                             #aplay("Downloadcat8.wav")
                         elif y==9:
                             print("copying to upload folder cat",y)
-                            #aplay("Downloadcat9.wav")
+                        elif y==10:
+                            print("copying to upload folder cat",y)
+                            #aplay("Downloadcat10.wav")
+                        elif y==11:
+                            print("copying to upload folder cat",y)                            
+                            #aplay("Downloadgencat.wav")
                         #print(localpath)
                         #print(filename)
                         src = pensrcpath+"/"+j
