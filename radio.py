@@ -1166,7 +1166,8 @@ while True:
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
             #os.system("cp "+recordingpathcat10+"/recorded_audio.wav" +localplaypath+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".wav &")
             os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +uploadpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-            os.system("pkill -9 aplay")
+            #os.system("pkill -9 aplay")
+            time.sleep(2.0)
             previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat10+"/recorded_audio.wav")#remove the recorded file
             longpress = False

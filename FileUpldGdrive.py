@@ -129,7 +129,7 @@ def getDevName():
             penDet = True
             print("Pendrive name:",ret)
     return ret
-
+time.sleep(16)
 while True:
     ''' The following code for Uploading files to localserver or Gdrive or pendrive '''
     #pendrive name
