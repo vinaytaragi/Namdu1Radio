@@ -190,8 +190,8 @@ led6 = LED(7)  #GPIO7  - LED6
 led7 = LED(12) #GPIO12 - LED7
 led8 = LED(16) #GPIO16 - LED8
 led9 = LED(20) #GPIO20 - LED9
-led11 = LED(21) #GPIO14 - LED10
-led10 = LED(14) #GPIO21 - LED10
+led11 = LED(21) #GPIO21 - LED11
+led10 = LED(14) #GPIO14 - LED10
 
 #GPIO's config:
 #-------------
