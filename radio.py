@@ -126,19 +126,19 @@ def is_onradio():
     Macro for playing audio instructions - to keep the code simple
 '''
 def aplay(filename):
-    os.system("aplay -D plughw:CARD=2,DEV=0 "+audioguidepath+"/"+filename+ "&")
+    os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/"+filename+ "&")
 
 '''
     Macro for playing recorded audio
 '''
 def previewplay(filename):
-    os.system("aplay -D plughw:CARD=2,DEV=0 "+previewaudioguidepath+"/"+filename+ "&")
+    os.system("aplay -D plughw:CARD=1,DEV=0 "+previewaudioguidepath+"/"+filename+ "&")
     
     '''
     Macro for recording audio
 '''
 def arecord(filename):
-    os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav -D sysdefault:CARD=2 -f dat & ")
+    os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav -D sysdefault:CARD=1 -f dat & ")
     
 '''
     For the given path, get the List of all files in the directory tree 
