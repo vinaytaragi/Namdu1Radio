@@ -1,2 +1,9 @@
-copy folder named media uploads folderto var/www/html 
-sudo chown -R pi:www-data /var/www/html/
+Follow below steps for installation:
+-----------------------------------
+1. Configure the Gdrive as per the steps mentioned in the below link:
+   "https://medium.com/@artur.klauser/mounting-google-drive-on-raspberry-pi-f5002c7095c2"
+2. Install the "lame" using below command (Uisng terminal)
+   "sudo apt-get install lame"
+3. Run this command in the terminal: sudo chown -R pi:www-data /var/www/html/
+4. Copy folder named "media" to uploads folder to var/www/html 
+
