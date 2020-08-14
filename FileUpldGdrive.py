@@ -1,6 +1,7 @@
 #!/usr/bin/python
-# @brief: Script to upload files to google drive automatically
-#         This script will be invoked on every boot
+# @brief: Script to upload files to google drive and download files
+#         automatically .upload folder.
+#         This script will be invoked on boot.
 #
 # @ver: 1.0
 #----------------------------------------------------------------#
@@ -364,13 +365,3 @@ while True:
                                 else:
                                     found = False
                             #aplay("Downloadcat1.wav")
-                        #print(localpath)
-                        #print(filename)
-                        #src = pensrcpath+"/"+j
-                        #dst = updstpath+"/"+j
-                        #print(src)
-                        #print(dst)
-                        #shutil.copy(src, dst)
-                        #print("Copied to upload folder cat",y)        
-        
-                
