@@ -42,16 +42,6 @@ recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
 print(recFileName)
 
 
-
-# converting recorded audio to mp3 and rename with date and time of recording
-os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat1+"/"+recFileName+".mp3")
-os.system("sudo cp "+recordingpathcat1+"/"+recFileName+".mp3 " +uploadpathcat1+"/"+recFileName+".mp3 &")
-#os.system("cp "+recordingpathcat10+"/recorded_audio.wav" +localplaypath+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".wav &")
-#os.system("sudo lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +uploadpathcat11+"/recorded@"+datetime.now().strftime('%d%b%Y_%H:%M')+".mp3 &")
-
-
-
-'''
 if cntr == True:
     os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs.txt')
     os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs.txt')
@@ -59,4 +49,4 @@ if cntr == True:
     cntr = False
 else:
     print("operation done")
-'''    
+    
