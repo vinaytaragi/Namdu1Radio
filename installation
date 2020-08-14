@@ -6,4 +6,11 @@ Follow below steps for installation:
    "sudo apt-get install lame"
 3. Run this command in the terminal: sudo chown -R pi:www-data /var/www/html/
 4. Copy folder named "media" to uploads folder to var/www/html 
+5. Copy the folder(lxsession) from "/etc/xdg/lxsession" to "/home/pi/.config/" folder
+
+
+File uploading and downloading details:
+---------------------------------------
+1. Gdrive will be mounted automatically on boot if it finds internet
+2. For uploading and downloading files to/from pendrive user has ensure that the "cat1" to "cat10" and "gencat" folders are created in pendrive.
 
