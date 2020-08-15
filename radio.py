@@ -138,7 +138,7 @@ def previewplay(filename):
     Macro for recording audio
 '''
 def arecord(filename):
-    os.system("arecord "+previewaudioguidepath+"/filename -D sysdefault:CARD=1 -f dat & ")
+    os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav -D sysdefault:CARD=1 -f dat & ")
     
 '''
     For the given path, get the List of all files in the directory tree 
@@ -193,6 +193,7 @@ led9 = LED(20) #GPIO20 - LED9
 led11 = LED(21) #GPIO21 - LED11
 led10 = LED(14) #GPIO14 - LED10
 
+
 #GPIO's config:
 #-------------
 but1 = Button(17) #17 - cat1
@@ -215,7 +216,6 @@ print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
 time.sleep(2.0)
-
 while True:
     print("pi Running")
     #Check whether local server connected
@@ -289,14 +289,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat1_stop.wav")
             print("Cat1 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat1+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat1+"/"+recFileName+".mp3 " +uploadpathcat1+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat1playpause = True
@@ -381,14 +381,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat2_stop.wav")
             print("Cat2 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat2+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat2+"/"+recFileName+".mp3 " +uploadpathcat2+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat2playpause = True
@@ -473,14 +473,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat3_stop.wav")
             print("Cat3 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat3+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat3+"/"+recFileName+".mp3 " +uploadpathcat3+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat3playpause = True
@@ -565,14 +565,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat4_stop.wav")
             print("Cat4 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat4+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat4+"/"+recFileName+".mp3 " +uploadpathcat4+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat4playpause = True
@@ -657,14 +657,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat5_stop.wav")
             print("Cat5 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat5+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat5+"/"+recFileName+".mp3 " +uploadpathcat5+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat5playpause = True
@@ -749,14 +749,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat6_stop.wav")
             print("Cat6 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat6+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat6+"/"+recFileName+".mp3 " +uploadpathcat6+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat6playpause = True
@@ -841,14 +841,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat7_stop.wav")
             print("Cat7 recording stopped")
-            time.sleep(3.0)
+            time.sleep(4.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat7+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat7+"/"+recFileName+".mp3 " +uploadpathcat7+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat7playpause = True
@@ -933,14 +933,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat8_stop.wav")
             print("Cat8 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat8+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat8+"/"+recFileName+".mp3 " +uploadpathcat8+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat8playpause = True
@@ -1024,14 +1024,14 @@ while True:
             os.system("pkill -9 aplay")
             aplay("Cat9_stop.wav")
             print("Cat9 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat9+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat9+"/"+recFileName+".mp3 " +uploadpathcat9+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat9playpause = True
@@ -1115,14 +1115,14 @@ while True:
             time.sleep(0.4)
             aplay("Cat10_stop.wav")
             print("Cat10 recording stopped")
-            time.sleep(3.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat10+"/"+recFileName+".mp3")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat10+"/"+recFileName+".mp3 " +uploadpathcat10+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")
-            previewplay("recorded_audio.wav")
+            os.system("pkill -9 aplay")            
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat10playpause = True
@@ -1208,14 +1208,14 @@ while True:
             but11.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
-            time.sleep(0.4)
+            time.sleep(1.4)
             print("Gencat recording stopped")
             aplay("Catgen_stop.wav")
             time.sleep(5.0)
             previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +previewaudioguidepath+"/"+recFileName+".mp3 &")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".mp3 &")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat11+"/"+recFileName+".mp3 " +uploadpathcat11+"/"+recFileName+".mp3 &")
             #os.system("rm "+recordingpathcat10+"/recorded_audio.wav")#remove the recorded file

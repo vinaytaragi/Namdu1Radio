@@ -128,8 +128,12 @@ def copy2Gdrive(path1,path2,filename):
     #print(dst_Path)
     os.system(src_Path)
     print ("upload success !!!")
-    time.sleep(0.1)    
- 
+    time.sleep(0.1)
+
+upled = LED(21) #GPIO21 - LED11
+# *** Setting up GPIO of Pi *** #
+GPIO.setmode(GPIO.BCM)
+
 os.system("sudo chmod -R 777 /var/www/html/.upload") 
 time.sleep(16)
 while True:
@@ -198,9 +202,11 @@ while True:
                     or x == 9 or x == 10 or x == 11:
                         chkfiles = os.listdir(destpath)
                         if not chkfiles:
+                            upled.on()
                             print("uploading to internet cat",x)
                             #aplay("sUploadingcat1.wav")
                             copy2Gdrive(localpaths,destpath,i)
+                            upled.off()
                         else:
                             for j in chkfiles:
                                 if i == j:
@@ -209,9 +215,11 @@ while True:
                                     os.system("rm "+localpaths+"/"+i)
                                     continue
                             if found == False:
+                                upled.on()
                                 print("uploading to internet cat",x)
                                 #aplay("sUploadingcat1.wav")
                                 copy2Gdrive(localpaths,destpath,i)
+                                upled.off()
                                 #found = False
                             else:
                                 found = False
@@ -228,9 +236,11 @@ while True:
                     dst0 = destpath_pend
                     chkfiles = os.listdir(dst0)
                     if not chkfiles:
+                        upled.on()
                         print("uploading to pendrive cat",x)
                         shutil.copy(src0, dst0)
                         os.system("rm "+src0)
+                        upled.off()
                     else:
                         for j in chkfiles:
                             if i == j:
@@ -239,10 +249,12 @@ while True:
                                 os.system("rm "+src0)
                                 continue
                         if found == False:
+                            upled.on()
                             print("uploading to pendrive cat",x)
                             #aplay("sUploadingcat1.wav")
                             shutil.copy(src0, dst0)
-                            os.system("rm "+src0)                                    
+                            os.system("rm "+src0)
+                            upled.off()
                             #found = False
                         else:
                             found = False
@@ -286,9 +298,11 @@ while True:
                         dst1 = destpath_up+"/"+k
                         chkfiles = os.listdir(destpath_up)
                         if not chkfiles:
+                            upled.on()
                             print("downloading to .upload cat",y)
                             shutil.copy(src1, dst1)
                             os.system("rm "+src1)
+                            upled.off()
                         else:
                             for l in chkfiles:
                                 if k == l:
@@ -297,10 +311,12 @@ while True:
                                     os.system("rm "+src1)
                                     continue
                             if found == False:
+                                upled.on()
                                 print("uploading to pendrive cat",y)
                                 #aplay("sUploadingcat1.wav")
                                 shutil.copy(src1, dst1)
                                 os.system("rm "+src1)
+                                upled.off()
                                 #found = False
                             else:
                                 found = False
@@ -346,9 +362,11 @@ while True:
                             dst1 = updstpath+"/"+k
                             chkfiles = os.listdir(updstpath)
                             if not chkfiles:
+                                upled.on()
                                 print("downloading to .upload cat",y)
                                 shutil.copy(src1, dst1)
                                 os.system("rm "+src1)
+                                upled.off()
                             else:
                                 for l in chkfiles:
                                     if k == l:
@@ -357,10 +375,12 @@ while True:
                                         os.system("rm "+src1)
                                         continue
                                 if found == False:
+                                    upled.on()
                                     print("uploading to pendrive cat",y)
                                     #aplay("sUploadingcat1.wav")
                                     shutil.copy(src1, dst1)
-                                    os.system("rm "+src1)                                    
+                                    os.system("rm "+src1)
+                                    upled.off()
                                     #found = False
                                 else:
                                     found = False
