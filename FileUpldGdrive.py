@@ -149,7 +149,7 @@ while True:
         localpaths = recordingpath1to9+str(x)
         #dst path
         destpath = destpath_gdrive+str(x)
-        if rv1 == 0:#if pendrive is connected
+        if devname != None:#if pendrive is connected
             destpath_pend = destpath_pdrive+str(x)
         print(localpaths)
         #print("for loop x=%d",x)
@@ -160,7 +160,7 @@ while True:
             localpaths = recordingpathgencat
             #dst path
             destpath = destpath_gdrivegencat
-            if rv1 == 0:#if pendrive is connected
+            if devname != None:#if pendrive is connected
                 destpath_pend = destpath_pdrivegencat
             print(localpaths)
             #print("for loop x=%d",x)
@@ -309,7 +309,7 @@ while True:
                     #shutil.copy(src1, dst1)                        
                     print ("Files copied to upload folder successfully !!!")
     else:
-        if rv1 == 0:
+        if devname != None:
             print("Pendrive detected")
             #aplay("pendrivedetected.wav")
             print("Pendrive name:",getDevName)

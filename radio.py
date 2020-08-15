@@ -138,7 +138,7 @@ def previewplay(filename):
     Macro for recording audio
 '''
 def arecord(filename):
-    os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav -D sysdefault:CARD=1 -f dat & ")
+    os.system("arecord "+previewaudioguidepath+"/filename -D sysdefault:CARD=1 -f dat & ")
     
 '''
     For the given path, get the List of all files in the directory tree 
@@ -1211,14 +1211,13 @@ while True:
             time.sleep(0.4)
             print("Gencat recording stopped")
             aplay("Catgen_stop.wav")
-            time.sleep(2.0)
+            time.sleep(5.0)
+            previewplay("recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".mp3")
+            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +previewaudioguidepath+"/"+recFileName+".mp3 &")
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recordingpathcat11+"/"+recFileName+".mp3 " +uploadpathcat11+"/"+recFileName+".mp3 &")
-            time.sleep(2.0)
-            previewplay("recorded_audio.wav")
             #os.system("rm "+recordingpathcat10+"/recorded_audio.wav")#remove the recorded file
             longpress = False
             gencatpreview = True
