@@ -7,6 +7,9 @@ Follow below steps for installation:
 3. Run this command in the terminal: sudo chown -R pi:www-data /var/www/html/
 4. Copy folder named "media" to uploads folder to var/www/html 
 5. Copy the folder(lxsession) from "/etc/xdg/lxsession" to "/home/pi/.config/" folder
+6. Open the file "autostart" using text editor  (Path: /home/pi/.config/lxsession/LXDE-PI) and add below lines
+   @python /home/pi/Documents/Namdu1Radio/radio.py &
+   @python /home/pi/Documents/Namdu1Radio/FileUpldGdrive.py &
 
 
 File uploading and downloading details:
