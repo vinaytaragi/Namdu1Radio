@@ -138,7 +138,7 @@ led = DualLED(18,23)
 GPIO.setmode(GPIO.BCM)
 
 os.system("sudo chmod -R 777 "+uploadpath)
-#time.sleep(16)
+time.sleep(16)
 print("Started fileupload python file")
 
 while True:
