@@ -22,7 +22,7 @@ import contextlib
 from datetime import datetime
 from subprocess import check_output
 import shutil
-
+from dualled import DualLED
 
 # *** Global Variables *** #
 previousTime = False
@@ -126,19 +126,19 @@ def is_onradio():
     Macro for playing audio instructions - to keep the code simple
 '''
 def aplay(filename):
-    os.system("aplay -D plughw:CARD=1,DEV=0 "+audioguidepath+"/"+filename+ "&")
-
+    os.system("aplay "+audioguidepath+"/"+filename)
+    
 '''
     Macro for playing recorded audio
 '''
-def previewplay(filename):
-    os.system("aplay -D plughw:CARD=1,DEV=0 "+previewaudioguidepath+"/"+filename+ "&")
+def previewplay(path, filename):
+    os.system("aplay "+path+"/"+filename+ "&")
     
     '''
     Macro for recording audio
 '''
-def arecord(filename):
-    os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav -D sysdefault:CARD=1 -f dat & ")
+def arecord(path, filename):
+    os.system("arecord "+path+"/"+filename+" -D sysdefault:CARD=2 -f dat &")
     
 '''
     For the given path, get the List of all files in the directory tree 
@@ -183,16 +183,18 @@ def shutdownPi():
 #------------
 led1 = LED(18) #GPIO18 - LED1
 led2 = LED(23) #GPIO23 - LED2
-led3 = LED(24) #GPIO24 - LED3
+#led3 = LED(24) #GPIO24 - LED3
 led4 = LED(25) #GPIO25 - LED4
 led5 = LED(8)  #GPIO8  - LED5
 led6 = LED(7)  #GPIO7  - LED6
 led7 = LED(12) #GPIO12 - LED7
 led8 = LED(16) #GPIO16 - LED8
 led9 = LED(20) #GPIO20 - LED9
-led11 = LED(21) #GPIO21 - LED11
+#led11 = LED(21) #GPIO21 - LED11
 led10 = LED(14) #GPIO14 - LED10
 
+led = None
+led = DualLED(21,24)
 
 #GPIO's config:
 #-------------
@@ -210,21 +212,24 @@ but11 = Button(26)#26 - cat11
 
 # *** Setting up GPIO of Pi *** #
 GPIO.setmode(GPIO.BCM)
-
+#time.sleep(10.0)
+led.fwd_on()
 #Pi started indication audio
 print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
-time.sleep(2.0)
+#time.sleep(3.0)
 while True:
     print("pi Running")
+    #led.off()
+    #led.fwd_on()
     #Check whether local server connected
     if is_onradio() and is_connected(local_server) and cntr:
         os.system("pkill -9 aplay")
         time.sleep(0.1)
         print ("starting namma school radio....from local server ")
         aplay("radiostart.wav")
-        time.sleep(3)
+        #time.sleep(3)
         os.system("chromium-browser --kiosk --app=http://"+local_server+" &")        
         cntr = False
         playpause = True
@@ -233,8 +238,8 @@ while True:
         print ("starting namma school radio from internet")
         os.system("pkill -9 aplay")
         #time.sleep(3)
-        os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
         aplay("radiostart.wav")
+        os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
         time.sleep(3.0)
         os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
         time.sleep(5.0)
@@ -247,8 +252,8 @@ while True:
         src_renamPath = r'/var/www/html/indexgencat.php'
         dst_renamPath = r'/var/www/html/index.php'
         shutil.copy(src_renamPath, dst_renamPath)
+        #time.sleep(3)
         aplay("radiostart.wav")
-        time.sleep(3)
         os.system("chromium-browser --kiosk localhost &")
         cntr = False
         playpause = True
@@ -457,7 +462,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led3.on()
+            #led3.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
             #time.sleep(0.4)
@@ -485,10 +490,10 @@ while True:
             longpress = False
             cat3playpause = True
             cat3preview = True
-            led3.off()
+            #led3.off()
             #break
         else:
-            led3.on()
+            #led3.on()
             pfiles = os.listdir(uploadpathcat3)
             if cat3preview == True:
                 cat3preview = False
@@ -529,7 +534,7 @@ while True:
                 os.system("chromium-browser localhost &")
                 time.sleep(0.2)
                 playpause = True               
-            led3.off()
+            #led3.off()
     ''' if button4 is pressed - Category 4 functionality button '''
     if but4.is_pressed:
         print("button4 pressed")
@@ -1174,8 +1179,8 @@ while True:
             led10.off()   
     '''upload and backup play functionality'''
     if but11.is_pressed:
-        os.system("killall chromium-browser")
-        os.system("pkill -o chromium")
+        #os.system("killall chromium-browser")
+        #os.system("pkill -o chromium")
         print("buttons 11 pressed")
         previousTime = time.time()
         while but11.is_pressed:
@@ -1195,34 +1200,31 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led11.on()
+            led.fwd_blink("slow")
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
             #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
             print("Gencat recording started")
             #aplay("beep_catgen.wav")
-            time.sleep(1.0)
+            #time.sleep(1.0)
+            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # records with 48000 quality
-            arecord("recorded_audio.wav")
+            arecord(previewaudioguidepath, recFileName+".wav")
             # scan for button press to stop recording
             but11.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
-            time.sleep(1.4)
-            print("Gencat recording stopped")
             aplay("Catgen_stop.wav")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".mp3 &")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat11+"/"+recFileName+".mp3 " +uploadpathcat11+"/"+recFileName+".mp3 &")
-            #os.system("rm "+recordingpathcat10+"/recorded_audio.wav")#remove the recorded file
+            #time.sleep(1.4)
+            print("Gencat recording stopped")
+            #time.sleep(5.0)
+            previewplay(recordingpathcat11, recFileName+".wav")
+            os.system("cp "+previewaudioguidepath+"/"+recFileName+".wav " +recordingpathcat11+"/"+recFileName+".wav")
+            os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
+            os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
+            led.fwd_on()
             longpress = False
             gencatpreview = True
-            led11.off()
-            #break
         else:
             if gencatpreview == True:
                 gencatpreview = False
@@ -1254,8 +1256,8 @@ while True:
                 os.system("pkill -9 aplay")
                 os.system("pkill -o chromium")
                 os.system("killall chromium-browser")
-                os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
-                aplay("radiostart.wav") 
+                aplay("radiostart.wav")
+                os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &") 
                 time.sleep(0.4)                        
                 playpause = True
             else:

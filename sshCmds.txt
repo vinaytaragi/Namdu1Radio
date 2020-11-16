@@ -1,0 +1,34 @@
+sshpass -p 'raspberry' rsync -r  pi@192.168.1.53:/home/pi/Documents/Namdu1Radio/  /home/pi/Documents/Backup/Shiva
+
+
+
+
+pi@raspberrypi:~ $ sshpass -p 'raspberry' rsync /home/pi/Documents/test.txt  pi@192.168.1.53:/home/pi/Documents/
+
+
+pi@raspberrypi:~ $ sshpass -p 'raspberry' rsync pi@192.168.1.53:/home/pi/Documents/test.txt  /home/pi/Documents/
+
+
+sshpass -p 'raspberry' rsync -r  pi@192.168.1.53:/home/pi/Documents/Namdu1Radio/audio-alert/*  /home/pi/Documents/Backup/
+
+
+
+Local host php issue fix:
+-----------------------
+1. sudo apt-get purge 'php*'
+
+2. sudo apt install php libapache2-mod-php -y
+
+
+sshpass (host key failed - unexplained error(255)) fix :
+--------------------------------------------------------
+run below commands and reboot:
+
+1. ssh pi@192.168.1.60
+
+2. sudo ssh -vvv pi@192.168.1.52	
+
+
+
+
+

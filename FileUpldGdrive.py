@@ -22,7 +22,7 @@ import contextlib
 from datetime import datetime
 from subprocess import check_output
 import shutil
-
+from dualled import DualLED
 
 # setting folder paths
 projectpath =  os.path.split(os.path.realpath(__file__))[0]
@@ -67,7 +67,7 @@ gdrivepath_broadcast = "/home/pi/mnt/gdrive/Ready_To_Broadcast/cat"
 gdrivepath_broadcastgencat = "/home/pi/mnt/gdrive/Ready_To_Broadcast/gencat"
 # network verification variables
 remote_server = "www.google.com"
-local_server = "192.168.1.50"
+local_server = "192.168.1."
 
 ''' *** Global Functions *** '''
 '''
@@ -89,6 +89,7 @@ def is_connected(network):
 def is_onradio():
     try:
         test = "Namdu1Radio" in check_output("iwgetid", universal_newlines=True)
+        print(test)
         return test
     except:
         return False
@@ -130,12 +131,16 @@ def copy2Gdrive(path1,path2,filename):
     print ("upload success !!!")
     time.sleep(0.1)
 
-upled = LED(21) #GPIO21 - LED11
+led = None
+led = DualLED(18,23)
+
 # *** Setting up GPIO of Pi *** #
 GPIO.setmode(GPIO.BCM)
 
-os.system("sudo chmod -R 777 /var/www/html/.upload") 
-time.sleep(16)
+os.system("sudo chmod -R 777 "+uploadpath)
+#time.sleep(16)
+print("Started fileupload python file")
+
 while True:
     ''' The following code for Uploading files to localserver or Gdrive or pendrive '''
     #pendrive name
@@ -155,7 +160,7 @@ while True:
         destpath = destpath_gdrive+str(x)
         if devname != None:#if pendrive is connected
             destpath_pend = destpath_pdrive+str(x)
-        print(localpaths)
+        #print(localpaths)
         #print("for loop x=%d",x)
         if not x==11:
             upfiles = os.listdir(localpaths)
@@ -166,7 +171,7 @@ while True:
             destpath = destpath_gdrivegencat
             if devname != None:#if pendrive is connected
                 destpath_pend = destpath_pdrivegencat
-            print(localpaths)
+            #print(localpaths)
             #print("for loop x=%d",x)
             upfiles = os.listdir(localpaths)   
         if not upfiles:
@@ -178,22 +183,7 @@ while True:
                 #aplay("NothingToUploadcat1.wav")
                 continue
         else:
-            if is_onradio() and is_connected(local_server):
-                #os.system("pkill -9 aplay")
-                print ("uploading to local server")
-                #aplay("sUploadinglocalserver.wav")
-                for i in upfiles:
-                    #os.system("pkill -9 aplay")
-                    if x == 1 or x == 2 or x == 3 or x == 4 \
-                    or x == 5 or x == 6 or x == 7 or x == 8 \
-                    or x == 9 or x == 10 or x == 11:
-                        print("uploading to studio cat",x)
-                        #aplay("sUploadingcat1.wav")
-                    os.system("sshpass -p 'raspberry' rsync "+localpaths+"/"+i+" pi@"+local_server+":/home/pi/Documents/pock1/")
-                    os.system("rm "+localpaths+"/"+i)
-                print ("upload success !!!")
-                #aplay("Uploaded.wav")
-            elif is_connected(remote_server):
+            if is_connected(remote_server):
                 #os.system("pkill -9 aplay")
                 #aplay("sUploadinginternet.wav")
                 for i in upfiles:
@@ -202,11 +192,11 @@ while True:
                     or x == 9 or x == 10 or x == 11:
                         chkfiles = os.listdir(destpath)
                         if not chkfiles:
-                            upled.on()
+                            led.fwd_blink("fast")
                             print("uploading to internet cat",x)
                             #aplay("sUploadingcat1.wav")
                             copy2Gdrive(localpaths,destpath,i)
-                            upled.off()
+                            led.off()
                         else:
                             for j in chkfiles:
                                 if i == j:
@@ -215,32 +205,29 @@ while True:
                                     os.system("rm "+localpaths+"/"+i)
                                     continue
                             if found == False:
-                                upled.on()
+                                led.fwd_blink("fast")
                                 print("uploading to internet cat",x)
                                 #aplay("sUploadingcat1.wav")
                                 copy2Gdrive(localpaths,destpath,i)
-                                upled.off()
+                                led.off()
                                 #found = False
                             else:
                                 found = False
                     else:
                         print("Dummy print")    
-            elif rv1 == 0:
+            elif devname != None:
                 print("Pendrive detected")
-                #aplay("pendrivedetected.wav")
-                #print("Pendrive name:",getDevName)
-                #aplay("copytopendrive.wav")
                 for i in upfiles:
                     print("copying files to pendrive")
                     src0 = localpaths+"/"+i
                     dst0 = destpath_pend
                     chkfiles = os.listdir(dst0)
                     if not chkfiles:
-                        upled.on()
+                        led.fwd_blink("fast")
                         print("uploading to pendrive cat",x)
                         shutil.copy(src0, dst0)
                         os.system("rm "+src0)
-                        upled.off()
+                        led.off()
                     else:
                         for j in chkfiles:
                             if i == j:
@@ -249,30 +236,84 @@ while True:
                                 os.system("rm "+src0)
                                 continue
                         if found == False:
-                            upled.on()
+                            led.fwd_blink("fast")
                             print("uploading to pendrive cat",x)
                             #aplay("sUploadingcat1.wav")
                             shutil.copy(src0, dst0)
                             os.system("rm "+src0)
-                            upled.off()
+                            led.off()
                             #found = False
                         else:
-                            found = False
-                    #print(src0)
-                    #print(dst0)
-                    #shutil.copy(src0, dst0)                        
+                            found = False                        
                     print ("Files copied to pendrive successfully !!!")                                
             else:
-                print("No internet!!! No Pendrive !!! No localserver available!!!")
-                #aplay("Nointernet.wav")
-    ''' The following code for downloading files from Gdrive/Pendrive to .upload folder '''                
-    # Get list of files in a directory
+                for Upserver in range(50,251):
+                    UpserverIP = local_server+str(Upserver)
+                    if is_connected(UpserverIP):
+                        #os.system("pkill -9 aplay")
+                        print("Local server for uploading detected",UpserverIP)
+                        #print ("uploading to local server")
+                        #aplay("sUploadinglocalserver.wav")
+                        for i in upfiles:
+                            #os.system("pkill -9 aplay")
+                            if x == 1 or x == 2 or x == 3 or x == 4 \
+                            or x == 5 or x == 6 or x == 7 or x == 8 \
+                            or x == 9 or x == 10 or x == 11:
+                                print("uploading to studio cat",x)
+                            if x == 11:
+                                #dst path
+                                destpath = uploadpathgencat
+                            else:
+                                #dst path
+                                destpath = uploadpath1to9+str(x)
+                                #aplay("sUploadingcat1.wav")
+                            led.fwd_blink("fast")
+                            os.system("sshpass -p 'raspberry' rsync "+localpaths+"/"+i+ " pi@"+UpserverIP+":"+destpath+"/")
+                            led.off()
+                            #os.system("rm "+localpaths+"/"+i)
+                        print ("upload to local server success !!!")
+                    else:
+                        print("Local server for uploading not detected",UpserverIP)
+
+    '''
+        The following code for downloading files from Gdrive/Pendrive/local server to .upload folder
+    '''
+
+    for Dwnserver in range(50,251):
+        DwnserverIP = local_server+str(Dwnserver)
+        if is_connected(DwnserverIP):
+            print("Local server for downloading detected",DwnserverIP)
+            #print("Downloading files to .upload from local server")
+            #loop for directories
+            for y in range(1, 12):
+            
+                if y == 11:
+                    path = uploadpathgencat
+                else:
+                    #src and dst path
+                    path = uploadpath1to9+str(y)
+                
+                dwnfiles = os.listdir(path)
+            
+                if not dwnfiles:
+                    print("No files to Download in cat",y)
+                    #aplay("NothingToUploadcat1.wav")
+                    continue
+                else:
+                    for k in dwnfiles:
+                        led.fwd_blink("fast")
+                        os.system("sshpass -p 'raspberry' rsync " "pi@"+DwnserverIP+":"+path+"/"+k+"  " +path+"/")
+                        led.off()
+        else:
+            print("Local server for downloading not detected",DwnserverIP)
+                    
     if is_connected(remote_server):
+        print("Downloading files to .upload from Gdrive")
         for y in range(1, 12):
             #src path
             gdrivepath = gdrivepath_broadcast+str(y)
             #dst path
-            destpath_up = uploadpath+str(y)
+            destpath_up = uploadpath1to9+str(y)
             if y==11:
                 #src path
                 gdrivepath = gdrivepath_broadcastgencat
@@ -298,11 +339,11 @@ while True:
                         dst1 = destpath_up+"/"+k
                         chkfiles = os.listdir(destpath_up)
                         if not chkfiles:
-                            upled.on()
+                            led.fwd_blink("fast")
                             print("downloading to .upload cat",y)
                             shutil.copy(src1, dst1)
                             os.system("rm "+src1)
-                            upled.off()
+                            led.off()
                         else:
                             for l in chkfiles:
                                 if k == l:
@@ -311,12 +352,12 @@ while True:
                                     os.system("rm "+src1)
                                     continue
                             if found == False:
-                                upled.on()
+                                led.fwd_blink("fast")
                                 print("uploading to pendrive cat",y)
                                 #aplay("sUploadingcat1.wav")
                                 shutil.copy(src1, dst1)
                                 os.system("rm "+src1)
-                                upled.off()
+                                led.off()
                                 #found = False
                             else:
                                 found = False
@@ -327,6 +368,7 @@ while True:
     else:
         if devname != None:
             print("Pendrive detected")
+            print("Downloading files to .upload from pendrive")
             #aplay("pendrivedetected.wav")
             print("Pendrive name:",getDevName)
             #os.system("pkill -9 aplay")
@@ -362,11 +404,11 @@ while True:
                             dst1 = updstpath+"/"+k
                             chkfiles = os.listdir(updstpath)
                             if not chkfiles:
-                                upled.on()
+                                led.fwd_blink("fast")
                                 print("downloading to .upload cat",y)
                                 shutil.copy(src1, dst1)
                                 os.system("rm "+src1)
-                                upled.off()
+                                led.off()
                             else:
                                 for l in chkfiles:
                                     if k == l:
@@ -375,13 +417,14 @@ while True:
                                         os.system("rm "+src1)
                                         continue
                                 if found == False:
-                                    upled.on()
+                                    led.fwd_blink("fast")
                                     print("uploading to pendrive cat",y)
                                     #aplay("sUploadingcat1.wav")
                                     shutil.copy(src1, dst1)
                                     os.system("rm "+src1)
-                                    upled.off()
+                                    led.off()
                                     #found = False
                                 else:
                                     found = False
                             #aplay("Downloadcat1.wav")
+                            
