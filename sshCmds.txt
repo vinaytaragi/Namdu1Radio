@@ -1,18 +1,3 @@
-sshpass -p 'raspberry' rsync -r  pi@192.168.1.53:/home/pi/Documents/Namdu1Radio/  /home/pi/Documents/Backup/Shiva
-
-
-
-
-pi@raspberrypi:~ $ sshpass -p 'raspberry' rsync /home/pi/Documents/test.txt  pi@192.168.1.53:/home/pi/Documents/
-
-
-pi@raspberrypi:~ $ sshpass -p 'raspberry' rsync pi@192.168.1.53:/home/pi/Documents/test.txt  /home/pi/Documents/
-
-
-sshpass -p 'raspberry' rsync -r  pi@192.168.1.53:/home/pi/Documents/Namdu1Radio/audio-alert/*  /home/pi/Documents/Backup/
-
-
-
 Local host php issue fix:
 -----------------------
 1. sudo apt-get purge 'php*'

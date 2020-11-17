@@ -2,12 +2,13 @@ Follow below steps for installation:
 -----------------------------------
 1. Configure the Gdrive as per the steps mentioned in the below link:
    "https://medium.com/@artur.klauser/mounting-google-drive-on-raspberry-pi-f5002c7095c2"
+   
 2. Install the "lame" using below command (Uisng terminal)
    "sudo apt-get install lame"
-3. Run this command in the terminal: sudo chown -R pi:www-data /var/www/html/
-4. Copy folder named "media" to uploads folder to var/www/html 
-5. Copy the folder(lxsession) from "/etc/xdg/lxsession" to "/home/pi/.config/" folder
-6. Open the file "autostart" using text editor  (Path: /home/pi/.config/lxsession/LXDE-PI) and add below lines
+
+3. Copy the folder(lxsession) from "/etc/xdg/lxsession" to "/home/pi/.config/" folder
+
+4. Open the file "autostart" using text editor  (Path: /home/pi/.config/lxsession/LXDE-PI) and add below lines
    @python /home/pi/Documents/Namdu1Radio/radio.py &
    @python /home/pi/Documents/Namdu1Radio/FileUpldGdrive.py &
 
@@ -15,5 +16,12 @@ Follow below steps for installation:
 File uploading and downloading details:
 ---------------------------------------
 1. Gdrive will be mounted automatically on boot if it finds internet
-2. For uploading and downloading files to/from pendrive user has ensure that the "cat1" to "cat10" and "gencat" folders are created in pendrive.
+2. For uploading and downloading files to/from pendrive user has to ensure that the "cat1" to "cat10" and "gencat" folders are created in pendrive.
 
+
+radio.py -> Is used for Recording audio and playing the radio from local/internet based on the internet availability.
+            There are 11 separate categories are configured for different buttons(GPIO pins) for recording and playing the respective audio.
+			
+FileUpldGdrive.py -> This python file is used for uploading and downloading the audio files from Gdrive/pendrive/local server.			
+
+Wav2Mp3Convert.py -> This python file is used for converting the recorded .wav files to .mp3 file.

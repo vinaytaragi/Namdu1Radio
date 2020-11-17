@@ -1,8 +1,20 @@
+#!/usr/bin/python
+# @brief: Script to upload files to google drive and download files
+#         automatically .upload folder.
+#         This script will be invoked on boot.
+#
+# @ver: 1.0
+#----------------------------------------------------------------#
+# ##   # #### ##   ## ###  #  #  ##  ####   #### ###  ##### #### #
+# # #  # #  # # # # # #  # #  # # #  #   #  #  # #  #   #   #  # #
+# #  # # #**# #  #  # #  # #  #   #  ####   #### #  #   #   #  # #
+# #   ## #  # #     # ###  ####  ### #    # #  # ###  ##### #### #
+#----------------------------------------------------------------#
+# *** Libraries *** #
 import os
 import time
 from datetime import datetime
 import fnmatch
-#from dualled import DualLED
 
 # setting folder paths
 projectpath =  os.path.split(os.path.realpath(__file__))[0]
@@ -43,7 +55,6 @@ uploadpathcat10 = uploadpath + "/cat10"
 uploadpathcat11 = uploadpath + "/gencat"
 
 led = None
-#led = DualLED(21,24)
 
 print("Monitoring for .wav to .mp3 file conversion")
 while True:
@@ -80,9 +91,6 @@ while True:
                     os.system("rm  "+recordingpathcat11+"/"+i)
                 else:
                     print("No .wav fies present for conversion")
-#    led.off()
-#    time.sleep(3.0)
-#    led.fwd_on()
 
     break
 
