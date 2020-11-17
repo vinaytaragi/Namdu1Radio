@@ -138,7 +138,7 @@ def previewplay(path, filename):
     Macro for recording audio
 '''
 def arecord(path, filename):
-    os.system("arecord "+path+"/"+filename+" -D sysdefault:CARD=2 -f dat &")
+    os.system("arecord "+path+"/"+filename+" -D sysdefault:CARD=1 -f dat &")
     
 '''
     For the given path, get the List of all files in the directory tree 
