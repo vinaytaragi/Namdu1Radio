@@ -240,7 +240,7 @@ while True:
         #time.sleep(3)
         aplay("radiostart.wav")
         os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
-        time.sleep(3.0)
+        time.sleep(1.0)
         os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
         time.sleep(5.0)
         cntr = False
