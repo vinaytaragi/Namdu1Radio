@@ -75,7 +75,7 @@
  <?php
     
      // Opens directory
-     $myDirectory=opendir("/var/www/html/.upload/gencat/");
+     $myDirectory=opendir("./.upload/gencat/");
 
      // Gets each entry
      while($entryName=readdir($myDirectory)) {
