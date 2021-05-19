@@ -79,82 +79,84 @@
       	  
            <li class='active'>
  	    <a href='.upload/gencat/$namehref'>$name</a>
-       <div>
-        <div class='input-group'>
-          <div class='custom-file'>
-            <input type='file' accept='audio/*' class='custom-file-input' id='inputFile' aria-describedby='inputGroupFileAddon04'>
-            <label class='custom-file-label' id='inputFileLabel' for='inputFile'>Choose file</label>
-          </div>
-          <div class='input-group-append'>
-            <button class='btn btn-primary' type='button' id='inputFileUploadButton' disabled='true'>Upload</button>
-          </div>
-        </div>
-        <div class='progress'>
-          <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 0%' aria-valuenow='0'
-            aria-valuemin='0' aria-valuemax='100'></div>
-        </div> 
-        <script>
-        var inputFile = document.getElementById('inputFile');
-        var inputFileLabel = document.getElementById('inputFileLabel');
-        var submitBtn = document.getElementById('inputFileUploadButton');
-        var progressBar = document.getElementById('progressbar');
-    
-        inputFile.addEventListener('change', handleFileupload);
-        submitBtn.addEventListener('click', uploadFile);
-    
-        function handleFileupload(e) {
-          const file = this.files[0];
-          inputFileLabel.innerHTML = file.name;
-          submitBtn.disabled = false;
-        }
-    
-    
-        function uploadFile() {
-          var file = inputFile.files[0];
-          // alert(file.name+' | '+file.size+' | '+file.type);
-          var formdata = new FormData();
-          formdata.append('file1', file);
-          var simple = '$name;
-          formdata.append('finalname',simple.split('.')[0]+'comment'+Date(Date.now).replaceAll(':','')+'.'+file.name.split('.')[1])
-          console.log(formdata.get('finalname'));
-          var ajax = new XMLHttpRequest();
-          ajax.upload.addEventListener('progress', progressHandler, false);
-          ajax.addEventListener('load', completeHandler, false);
-          ajax.addEventListener('error', errorHandler, false);
-          ajax.addEventListener('abort', abortHandler, false);
-          ajax.open('POST', 'MediaUpload/file_upload_parser.php'); // http://www.developphp.com/video/JavaScript/File-Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP
-          //use file_upload_parser.php from above url
-          ajax.send(formdata);
-        }
-    
-        function progressHandler(event) {
-          //_('loaded_n_total').innerHTML = 'Uploaded ' + event.loaded + ' bytes of ' + event.total;
-          var percent = (event.loaded / event.total) * 100;
-          progressBar.setAttribute('style', 'width:' + Math.round(percent)+'%');
-          progressBar.setAttribute('aria-valuenow',Math.round(percent));
-          progressBar.innerHTML=Math.round(percent)+'%';
-          console.log(percent);
-          //_('status').innerHTML = Math.round(percent) + '% uploaded... please wait';
-        }
-    
-        function completeHandler(event) {
-          //_('status').innerHTML = event.target.responseText;
-          alert('Upload successful');
-          progressBar.innerHTML = ''; //wil clear progress bar after successful upload
-          progressBar.setAttribute('style', 'width: 30px  ');
-          window.location = './index.html'
-        }
-    
-        function errorHandler(event) {
-          alert('Upload Failed');
-        }
-    
-        function abortHandler(event) {
-          alert('Upload Aborted');
-        }
-    
-      </script>
-	     ");
+       ");
+       print("<div>
+       <div class='input-group'>
+         <div class='custom-file'>
+           <input type='file' accept='audio/*' class='custom-file-input' id='inputFile' aria-describedby='inputGroupFileAddon04'>
+           <label class='custom-file-label' id='inputFileLabel' for='inputFile'>Choose file</label>
+         </div>
+         ");
+         print("<div class='input-group-append'>
+         <button class='btn btn-primary' type='button' id='inputFileUploadButton' disabled='true'>Upload</button>
+       </div>
+     </div>
+     <div class='progress'>
+       <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 0%' aria-valuenow='0'
+         aria-valuemin='0' aria-valuemax='100'></div>
+     </div> 
+     <script>
+     var inputFile = document.getElementById('inputFile');
+     var inputFileLabel = document.getElementById('inputFileLabel');
+     var submitBtn = document.getElementById('inputFileUploadButton');
+     var progressBar = document.getElementById('progressbar');
+ 
+     inputFile.addEventListener('change', handleFileupload);
+     submitBtn.addEventListener('click', uploadFile);
+ 
+     function handleFileupload(e) {
+       const file = this.files[0];
+       inputFileLabel.innerHTML = file.name;
+       submitBtn.disabled = false;
+     }
+ 
+ 
+     function uploadFile() {
+       var file = inputFile.files[0];
+       // alert(file.name+' | '+file.size+' | '+file.type);
+       var formdata = new FormData();
+       formdata.append('file1', file);
+       var simple = '$name';
+       formdata.append('finalname',simple.split('.')[0]+'comment'+Date(Date.now).replaceAll(':','')+'.'+file.name.split('.')[1])
+       console.log(formdata.get('finalname'));
+       var ajax = new XMLHttpRequest();
+       ajax.upload.addEventListener('progress', progressHandler, false);
+       ajax.addEventListener('load', completeHandler, false);
+       ajax.addEventListener('error', errorHandler, false);
+       ajax.addEventListener('abort', abortHandler, false);
+       ajax.open('POST', 'MediaUpload/file_upload_parser.php'); // http://www.developphp.com/video/JavaScript/File-Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP
+       //use file_upload_parser.php from above url
+       ajax.send(formdata);
+     }
+ 
+     function progressHandler(event) {
+       //_('loaded_n_total').innerHTML = 'Uploaded ' + event.loaded + ' bytes of ' + event.total;
+       var percent = (event.loaded / event.total) * 100;
+       progressBar.setAttribute('style', 'width:' + Math.round(percent)+'%');
+       progressBar.setAttribute('aria-valuenow',Math.round(percent));
+       progressBar.innerHTML=Math.round(percent)+'%';
+       console.log(percent);
+       //_('status').innerHTML = Math.round(percent) + '% uploaded... please wait';
+     }
+ 
+     function completeHandler(event) {
+       //_('status').innerHTML = event.target.responseText;
+       alert('Upload successful');
+       progressBar.innerHTML = ''; //wil clear progress bar after successful upload
+       progressBar.setAttribute('style', 'width: 30px  ');
+       window.location = './index.php'
+     }
+ 
+     function errorHandler(event) {
+       alert('Upload Failed');
+     }
+ 
+     function abortHandler(event) {
+       alert('Upload Aborted');
+     }
+ 
+   </script>
+    ");
 	 $flag=1;
 	}
 	else{      
@@ -163,9 +165,84 @@
           
            <li>
 	     <a href='./.upload/gencat/$namehref'>$name</a>
-	   </li>
-	 ");
-   
+	   </li>"
+  );
+  print("<div>
+  <div class='input-group'>
+    <div class='custom-file'>
+      <input type='file' accept='audio/*' class='custom-file-input' id='inputFile' aria-describedby='inputGroupFileAddon04'>
+      <label class='custom-file-label' id='inputFileLabel' for='inputFile'>Choose file</label>
+    </div>
+    ");
+    print("<div class='input-group-append'>
+    <button class='btn btn-primary' type='button' id='inputFileUploadButton' disabled='true'>Upload</button>
+  </div>
+</div>
+<div class='progress'>
+  <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 0%' aria-valuenow='0'
+    aria-valuemin='0' aria-valuemax='100'></div>
+</div> 
+<script>
+var inputFile = document.getElementById('inputFile');
+var inputFileLabel = document.getElementById('inputFileLabel');
+var submitBtn = document.getElementById('inputFileUploadButton');
+var progressBar = document.getElementById('progressbar');
+
+inputFile.addEventListener('change', handleFileupload);
+submitBtn.addEventListener('click', uploadFile);
+
+function handleFileupload(e) {
+  const file = this.files[0];
+  inputFileLabel.innerHTML = file.name;
+  submitBtn.disabled = false;
+}
+
+
+function uploadFile() {
+  var file = inputFile.files[0];
+  // alert(file.name+' | '+file.size+' | '+file.type);
+  var formdata = new FormData();
+  formdata.append('file1', file);
+  var simple = '$name';
+  formdata.append('finalname',simple.split('.')[0]+'comment'+Date(Date.now).replaceAll(':','')+'.'+file.name.split('.')[1])
+  console.log(formdata.get('finalname'));
+  var ajax = new XMLHttpRequest();
+  ajax.upload.addEventListener('progress', progressHandler, false);
+  ajax.addEventListener('load', completeHandler, false);
+  ajax.addEventListener('error', errorHandler, false);
+  ajax.addEventListener('abort', abortHandler, false);
+  ajax.open('POST', 'MediaUpload/file_upload_parser.php'); // http://www.developphp.com/video/JavaScript/File-Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP
+  //use file_upload_parser.php from above url
+  ajax.send(formdata);
+}
+
+function progressHandler(event) {
+  //_('loaded_n_total').innerHTML = 'Uploaded ' + event.loaded + ' bytes of ' + event.total;
+  var percent = (event.loaded / event.total) * 100;
+  progressBar.setAttribute('style', 'width:' + Math.round(percent)+'%');
+  progressBar.setAttribute('aria-valuenow',Math.round(percent));
+  progressBar.innerHTML=Math.round(percent)+'%';
+  console.log(percent);
+  //_('status').innerHTML = Math.round(percent) + '% uploaded... please wait';
+}
+
+function completeHandler(event) {
+  //_('status').innerHTML = event.target.responseText;
+  alert('Upload successful');
+  progressBar.innerHTML = ''; //wil clear progress bar after successful upload
+  progressBar.setAttribute('style', 'width: 30px  ');
+  window.location = './index.php'
+}
+
+function errorHandler(event) {
+  alert('Upload Failed');
+}
+
+function abortHandler(event) {
+  alert('Upload Aborted');
+}
+
+</script>");
         }
        }
       }
@@ -186,7 +263,7 @@
   <script type="text/javascript">
 
 
-document.addEventListener("DOMContentLoaded", function(){
+    $(window).load(function(){
       
     var audio;
     var playlist;
