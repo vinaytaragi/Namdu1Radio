@@ -1,14 +1,15 @@
 
 
-function handleFileupload(e) {
-  const file = this.files[0];
-  inputFileLabel.innerHTML = file.name;
-  submitBtn.disabled = false;
+function handleFileupload(fileid,id) {
+  const file = fileid.files[0];
+  id.innerHTML = file.name;
+  console.log(file.name)
+  //submitBtn.disabled = false;
 }
 
 
-function uploadFile(name) {
-  var file = inputFile.files[0];
+function uploadFile(name,fileid) {
+  var file =fileid.files[0];
   // alert(file.name+' | '+file.size+' | '+file.type);
   var formdata = new FormData();
   formdata.append('file1', file);

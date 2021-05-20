@@ -63,12 +63,18 @@
     //  $ext = findexts($name);
 	
       if (strlen($name)>='3'){
+        $str_index=strval($index);
+        $fileid = "inputFile".$str_index;
+        print($fileid);
+        $inputid="inputFileUploadButton".$str_index;
+        $inputlab="inputFileLabel".$str_index;
+        
+
 	
 	if ($flag==0){
 	 // Print 'em
  
-  	 print("<br>
-     <button class='btn btn-primary' type='button' id='inputFileUploadButton' disabled='true'>Upload</button><br>
+  	 print("
 	  <audio autoplay id='audio' preload='auto' tabindex= '0' controls='' type='audio/mpeg'>
            <source src='.upload/gencat/$namehref'>
            Sorry, your browser does not support HTML5 audio.
@@ -77,6 +83,7 @@
 
 	  <ul id='playlist'>
      	 ");
+       
       	 print("
       	  
            <li class='active'>
@@ -85,12 +92,12 @@
        print("<div>
        <div class='input-group'>
          <div class='custom-file'>
-           <input type='file' accept='audio/*' class='custom-file-input' id='inputFile' aria-describedby='inputGroupFileAddon04'>
-           <label class='custom-file-label' id='inputFileLabel' for='inputFile'>Choose file</label>
+           <input type='file' accept='audio/*' class='custom-file-input' id='$fileid' aria-describedby='inputGroupFileAddon04'>
+           <label class='custom-file-label' id='$inputlab' for='$fileid'>Choose file</label>
          </div>
          ");
          print("<div class='input-group-append'>
-         
+         <button class='btn btn-primary' type='button' id='$inputid' >Upload</button>
        </div>
      </div>
      <div class='progress'>
@@ -98,22 +105,20 @@
          aria-valuemin='0' aria-valuemax='100'></div>
      </div> 
      <script>
-     var inputFile = document.getElementById('inputFile');
-     var inputFileLabel = document.getElementById('inputFileLabel');
-     var submitBtn = document.getElementById('inputFileUploadButton');
+     var $fileid = document.getElementById('$fileid');
+     var $inputlab = document.getElementById('$inputlab');
+     var submitBtn = document.getElementById('$inputid');
      var progressBar = document.getElementById('progressbar');
- 
-     inputFile.addEventListener('change', handleFileupload);
-     submitBtn.addEventListener('click', function(){uploadFile('$name')});
- 
-    
+     
+     $fileid.addEventListener('change', function(){handleFileupload($fileid,$inputlab)});
+     submitBtn.addEventListener('click', function(){uploadFile('$name',$fileid)});
+     </script>");
   
  
-   </script>
-    ");
+  
 	 $flag=1;
 	}
-	else{      
+	else{    
          // Print 'em
          print("
           
@@ -124,12 +129,12 @@
   print("<div>
   <div class='input-group'>
     <div class='custom-file'>
-      <input type='file' accept='audio/*' class='custom-file-input' id='inputFile' aria-describedby='inputGroupFileAddon04'>
-      <label class='custom-file-label' id='inputFileLabel' for='inputFile'>Choose file</label>
+      <input type='file' accept='audio/*' class='custom-file-input' id='$fileid' aria-describedby='inputGroupFileAddon04'>
+      <label class='custom-file-label' id='$inputlab' for='$fileid'>Choose file</label>
     </div>
     ");
     print("<div class='input-group-append'>
-    
+    <button class='btn btn-primary' type='button' id='$inputid' >Upload</button>
   </div>
 </div>
 <div class='progress'>
@@ -137,15 +142,13 @@
     aria-valuemin='0' aria-valuemax='100'></div>
 </div> 
 <script>
-var inputFile = document.getElementById('inputFile');
-var inputFileLabel = document.getElementById('inputFileLabel');
-var submitBtn = document.getElementById('inputFileUploadButton');
+var $fileid = document.getElementById('$fileid');
+var $inputlab = document.getElementById('$inputlab');
+var submitBtn = document.getElementById('$inputid');
 var progressBar = document.getElementById('progressbar');
 
-inputFile.addEventListener('change', handleFileupload);
-submitBtn.addEventListener('click', function(){uploadFile('$name')});
-
-
+$fileid.addEventListener('change', function(){handleFileupload($fileid,$inputlab)});
+submitBtn.addEventListener('click', function(){uploadFile('$name',$fileid)});
 </script>");
         }
        }
