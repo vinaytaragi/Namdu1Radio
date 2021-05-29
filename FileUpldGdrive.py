@@ -193,8 +193,14 @@ while True:
             #src path
             localpaths = recordingpathgencat
             
+            if not os.path.isdir(localpaths):
+                os.system("mkdir -p "+localpaths)
+            
             #dst path
             destpath = destpath_gdrivegencat
+
+            if not os.path.isdir(destpath):
+                os.system("mkdir -p "+destpath)
             
             #if pendrive is connected
             if devname != None:
