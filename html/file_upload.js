@@ -13,7 +13,11 @@ function uploadFile(name,fileid) {
   // alert(file.name+' | '+file.size+' | '+file.type);
   var formdata = new FormData();
   formdata.append('file1', file);
-  formdata.append('finalname',name.split('.')[0]+'comment'+Date(Date.now).replace(/:/g,'')+'.'+file.name.split('.')[1])
+  var d = new Date();
+  var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+    d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+
+  formdata.append('finalname',name.split('.')[0]+'comment'+datestring+'.'+file.name.split('.')[1])
   console.log(formdata.get('finalname'));
   var ajax = new XMLHttpRequest();
   ajax.upload.addEventListener('progress', progressHandler, false);
