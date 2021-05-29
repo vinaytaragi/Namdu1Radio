@@ -1,14 +1,19 @@
 <html>
  <head>
- <script src="file_upload.js"></script> 
+ <script src="./file_upload.js"></script> 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <style type="text/css">
     #playlist,audio{background:#666;width:400px;padding:20px;}
     .active a{color:#5DB0E6;text-decoration:none;}
     li a{color:#eeeedd;background:#333;padding:5px;display:block;}
     li a:hover{text-decoration:none;}
+    
   </style>
-  
+ 
+  <!-- added page loader due to delay in the page loading -->
+
+<script src='file_upload.js'></script>
+<!-- loader css ends here  -->
  </head>
  <body>
   <div id="topMenu" style="display:flex; flex-direction: row;">
@@ -21,15 +26,17 @@
    <font size="10px">  Programs </font> 
 
    <br><br>	
+   
  <?php
     
      // Opens directory
-     $myDirectory=opendir("./.upload/gencat/");
+     //$myDirectory=opendir("./.upload/gencat/");
 
      // Gets each entry
-     while($entryName=readdir($myDirectory)) {
-      $dirArray[]=$entryName;
-     }
+     //while($entryName=readdir($myDirectory)) {
+     // $dirArray[]=$entryName;
+     //}
+ $dirArray=array_diff(scandir("./.upload/gencat/"), array('.', '..'));
 
      // Finds extensions of files
 /*      function findexts($filename) {
@@ -39,7 +46,7 @@
      } */
 
      // Closes directory
-     closedir($myDirectory);
+     //closedir($myDirectory);
 
      // Counts elements in array
      $indexCount=count($dirArray);
@@ -52,7 +59,7 @@
      
      
      // (Randomly) Loops through the array of files
-     for($index=rand(0,$indexCount); $index < $indexCount; $index++) {
+     for($index=random(0,$indexCount); $index < $indexCount; $index++) {
       
       //Loops through the array of files
       //for($index=0; $index < $indexCount; $index++) {
@@ -65,16 +72,16 @@
       if (strlen($name)>='3'){
         $str_index=strval($index);
         $fileid = "inputFile".$str_index;
-        print($fileid);
+     //   echo($fileid);
         $inputid="inputFileUploadButton".$str_index;
         $inputlab="inputFileLabel".$str_index;
         
 
 	
 	if ($flag==0){
-	 // Print 'em
+	 // echo 'em
  
-  	 print("
+  	 echo("
 	  <audio autoplay id='audio' preload='auto' tabindex= '0' controls='' type='audio/mpeg'>
            <source src='.upload/gencat/$namehref'>
            Sorry, your browser does not support HTML5 audio.
@@ -82,26 +89,24 @@
 		
 
 	  <ul id='playlist'>
-     	 ");
-       
-      	 print("
+     	 
       	  
            <li class='active'>
  	    <a href='.upload/gencat/$namehref'>$name</a>
-       ");
-       print("<div>
+       <div>
        <div class='input-group'>
          <div class='custom-file'>
+         <p class='comment'> Share a comment</p> 
            <input type='file' accept='audio/*' class='custom-file-input' id='$fileid' aria-describedby='inputGroupFileAddon04'>
+
            <label class='custom-file-label' id='$inputlab' for='$fileid'>Choose file</label>
          </div>
-         ");
-         print("<div class='input-group-append'>
+         <div class='input-group-append'>
          <button class='btn btn-primary' type='button' id='$inputid' >Upload</button>
        </div>
      </div>
      <div class='progress'>
-       <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 0%' aria-valuenow='0'
+       <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 5%' aria-valuenow='0'
          aria-valuemin='0' aria-valuemax='100'></div>
      </div> 
      <script>
@@ -112,33 +117,36 @@
      
      $fileid.addEventListener('change', function(){handleFileupload($fileid,$inputlab)});
      submitBtn.addEventListener('click', function(){uploadFile('$name',$fileid)});
-     </script>");
+     </script>
+     
+ "
+    );
   
  
   
 	 $flag=1;
 	}
 	else{    
-         // Print 'em
-         print("
+         // echo 'em
+         echo("
           
            <li>
 	     <a href='./.upload/gencat/$namehref'>$name</a>
-	   </li>"
-  );
-  print("<div>
+	   </li>
+     <div>
   <div class='input-group'>
     <div class='custom-file'>
+    <p class='comment'> Share a comment</p> 
       <input type='file' accept='audio/*' class='custom-file-input' id='$fileid' aria-describedby='inputGroupFileAddon04'>
+    
       <label class='custom-file-label' id='$inputlab' for='$fileid'>Choose file</label>
     </div>
-    ");
-    print("<div class='input-group-append'>
+ <div class='input-group-append'>
     <button class='btn btn-primary' type='button' id='$inputid' >Upload</button>
   </div>
 </div>
 <div class='progress'>
-  <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 0%' aria-valuenow='0'
+  <div id='progressbar' class='progress-bar bg-success' role='progressbar' style='width: 5%' aria-valuenow='0'
     aria-valuemin='0' aria-valuemax='100'></div>
 </div> 
 <script>
@@ -167,52 +175,6 @@ submitBtn.addEventListener('click', function(){uploadFile('$name',$fileid)});
     
   ></script>
 
-  <script type="text/javascript">
-
-
-    $(window).load(function(){
-      
-    var audio;
-    var playlist;
-    var tracks;
-    var current;
-
-    init();
-    function init(){
-       	current = 0;
-	audio = $('#audio');
-    	playlist = $('#playlist');
-    	tracks = playlist.find('li a');
-    	len = tracks.length - 1;
-    	audio[0].volume = .90;
-    	playlist.find('a').click(function(e){
-          e.preventDefault();
-          link = $(this);
-          current = link.parent().index();
-          run(link, audio[0]);
-    	});
-    	audio[0].addEventListener('ended',function(e){
-          current++;
-          if(current > len){
-            current = 0;
-            link = playlist.find('a')[0];
-          }
-	  else{
-            link = playlist.find('a')[current];    
-          }
-          run($(link),audio[0]);
-    	});
-     }
-     function run(link, player){
-        player.src = link.attr('href');
-        par = link.parent();
-        par.addClass('active').siblings().removeClass('active');
-        audio[0].load();
-        audio[0].play();
-     }
-
-    });
-
-  </script>
+  
  
 </html>

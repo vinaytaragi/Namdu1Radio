@@ -13,7 +13,7 @@ function uploadFile(name,fileid) {
   // alert(file.name+' | '+file.size+' | '+file.type);
   var formdata = new FormData();
   formdata.append('file1', file);
-  formdata.append('finalname',name.split('.')[0]+'comment'+Date(Date.now).replaceAll(':','')+'.'+file.name.split('.')[1])
+  formdata.append('finalname',name.split('.')[0]+'comment'+Date(Date.now).replace(/:/g,'')+'.'+file.name.split('.')[1])
   console.log(formdata.get('finalname'));
   var ajax = new XMLHttpRequest();
   ajax.upload.addEventListener('progress', progressHandler, false);

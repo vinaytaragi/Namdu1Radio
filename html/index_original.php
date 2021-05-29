@@ -88,6 +88,7 @@
 	$exts = $filename[$i-1];
       return $exts;
      }
+  
 
      // Closes directory
      closedir($myDirectory);
