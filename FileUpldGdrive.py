@@ -107,7 +107,10 @@ def aplay(filename):
 '''    
 def getDevName():
     '''The below code to identify the pendrive folder name - Start'''
-    os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
+    try:
+        os.system('rm -rf /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
+    except:
+        print("file not found")    
     os.system('ls /media/pi > /home/pi/Documents/Namdu1Radio/usbs/usbs.txt')
     file1 = open("/home/pi/Documents/Namdu1Radio/usbs/usbs.txt", "r")
     Lines = file1.readlines()
@@ -172,8 +175,16 @@ while True:
         #src path
         localpaths = recordingpath1to9+str(x)
         
+        #Karan's code starts
+
+        if not os.path.isdir(localpaths):
+            os.system("mkdir -p "+localpaths)
+
+        
         #dst path
         destpath = destpath_gdrive+str(x)
+        if not os.path.isdir(destpath):
+            os.system("mkdir -p "+destpath)
         
         if devname != None:#if pendrive is connected
             destpath_pend = destpath_pdrive+str(x)
