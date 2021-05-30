@@ -54,12 +54,14 @@
      // Sorts files
      //sort($dirArray);
        rsort($dirArray);//sorting in descending order
+
+      // print($indexCount);
 	
      $flag=0;
      
      
      // (Randomly) Loops through the array of files
-     for($index=rand(0,$indexCount); $index < $indexCount; $index++) {
+     for($index=0; $index < $indexCount; $index++) {
       
       //Loops through the array of files
       //for($index=0; $index < $indexCount; $index++) {
