@@ -10,7 +10,7 @@ function handleFileupload(fileid,id) {
 
 function uploadFile(name,fileid) {
   var file =fileid.files[0];
-  alert(file.name+' | '+file.size+' | '+file.type);
+ // alert(file.name+' | '+file.size+' | '+file.type);
   console.log(file);
   if(!file){
     alert("Please select a file first.");
