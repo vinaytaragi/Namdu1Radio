@@ -13,7 +13,7 @@ if(isset($_FILES['uploaded_file'])) {
        "audio/wav",'audio/mpeg', 'audio/mpeg3', 'audio/mp3', 'audio/x-mpeg', 'audio/x-mp3', 'audio/x-mpeg3', 'audio/x-mpg', 'audio/x-mpegaudio', 'audio/x-mpeg-3'
     );
 
-    if($fileSize>= $maxsize) || ($fileSize == 0)) {
+    if(($fileSize>= $maxsize) || ($fileSize == 0)) {
         $errors[] = 'File too large. File must be less than 10 MB megabytes.';
     }
 
