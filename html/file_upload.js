@@ -16,12 +16,12 @@ function uploadFile(name,fileid) {
     alert("Please select a file first.");
     window.location.reload(); 
   }
-  else if(file.size>1000000){
+  else if(file.size>10000000){
     alert("Filesize is grater then 10MB please select a smaller size.");
    window.location.reload(); 
   
   }
-  else if(file.name.split(".")[1]!="mp3" ||file.name.split(".")[1]!="wav"){
+  else if((file.name.split(".")[1]!="mp3") ||(file.name.split(".")[1]!="wav")){
     alert("Please select the corret filtype mp3 or wav.");
     window.location.reload(); 
 
