@@ -26,7 +26,7 @@ import shutil
 from dualled import DualLED
 from new_function import *
 
-logging.basicConfig(filename="/opt/logfilename.log", level=logging.INFO)
+#logging.basicConfig(filename="/opt/logfilename.log", level=logging.INFO)
 
 # *** Global Variables *** #
 previousTime = False
