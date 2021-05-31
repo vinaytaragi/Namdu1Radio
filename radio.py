@@ -14,6 +14,7 @@
 import RPi.GPIO as GPIO
 from gpiozero import LED, Button
 import time
+import logging
 import os
 import socket
 import subprocess
@@ -23,6 +24,9 @@ from datetime import datetime
 from subprocess import check_output
 import shutil
 from dualled import DualLED
+from new_function import *
+
+logging.basicConfig(filename="/opt/logfilename.log", level=logging.INFO)
 
 # *** Global Variables *** #
 previousTime = False
@@ -101,77 +105,17 @@ uploadpathcat9 = uploadpath + "/cat9"
 uploadpathcat10 = uploadpath + "/cat10"
 uploadpathcat11 = uploadpath + "/gencat"
 
-''' *** Global Functions *** '''
-'''
-    To check if Pi is connected to internet or local server
-'''
-def is_connected(network):
-    try:
-        #if ".com" in network:
-        #    network = socket.gethostbyname(network)
-        s = socket.create_connection((network, 80))
-        return True
-    except:
-        return False
+stop_audio_list=[i for i in os.listdir("Namdu1Radio/audio-alert/") if "stop" in i]
+stop_audio_list
+names=[]
+for i in stop_audio_list:
+    if "_" in i:
+        names.append(i.split("_")[0])
+    else:
+        names.append(i.split(".")[0])
+names
+stop_audio=dict(zip(names,stop_audio_list))
 
-''' To check if wifi is local network '''        
-def is_onradio():
-    try:
-        test = "Namdu1Radio" in check_output("iwgetid", universal_newlines=True)
-        return test
-    except:
-        return False
-
-'''
-    Macro for playing audio instructions - to keep the code simple
-'''
-def aplay(filename):
-    os.system("aplay "+audioguidepath+"/"+filename)
-    
-'''
-    Macro for playing recorded audio
-'''
-def previewplay(path, filename):
-    os.system("aplay "+path+"/"+filename+ "&")
-    
-    '''
-    Macro for recording audio
-'''
-def arecord(path, filename):
-    os.system("arecord "+path+"/"+filename+" -D sysdefault:CARD=1 -f dat &")
-    
-'''
-    For the given path, get the List of all files in the directory tree 
-'''
-def getListOfFiles(dirName):
-    # create a list of file and sub directories
-    # names in the given directory
-    listOfFile = os.listdir(dirName)
-    allFiles = list()
-    # Iterate over all the entries
-    for entry in listOfFile:
-        # Create full path
-        fullPath = os.path.join(dirName, entry)
-        # If entry is a directory then get the list of files in this directory
-        if os.path.isdir(fullPath):
-            allFiles = allFiles + getListOfFiles(fullPath)
-        else:
-            allFiles.append(fullPath)
-
-    return allFiles
-
-'''
-    Function to shutdown pi
-'''    
-def shutdownPi():
-    os.system("pkill -9 aplay")
-    aplay("shutdown.wav")
-    os.system("sleep 3s; shutdown now ")                                
-    exit(0)
-
-'''
-    Function to join wavefiles
-'''    
 #def wavFilesJoin(file1,file):
     #a, fs, enc = audiolab.wavread('file1')
     #b, fs, enc = audiolab.wavread('file2')
@@ -258,9 +202,9 @@ while True:
         cntr = False
         playpause = True
         time.sleep(0.2)
-
+    x=True
     ''' if button1 is pressed - Category 1 functionality button '''
-    if but1.is_pressed:
+    if x:                                     #changeing for testing form but1.ispressed to true change back when done testing
         print("button1 pressed")
         previousTime = time.time()
         while but1.is_pressed:
@@ -278,30 +222,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led1.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat1.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but1.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat1_stop.wav")
-            print("Cat1 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat1+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat1+"/"+recFileName+".mp3 " +uploadpathcat1+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
+            record(led1,but1,stop_audio.Cat1,recordingpathcat1,uploadpathcat1)           
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat1playpause = True
@@ -309,18 +230,15 @@ while True:
             led1.off()
             #break
         else:
-            led1.on()
+            led1.on(au)
             pfiles = os.listdir(uploadpathcat1)
             if cat1preview == True:
                 cat1preview = False
                 print("Cat1 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat1playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
+
                 cat1playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -369,7 +287,8 @@ while True:
                 #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
-        if longpress:
+        y=True
+        if y:
             led2.on()
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
@@ -399,6 +318,8 @@ while True:
             cat2playpause = True
             cat2preview = True
             led2.off()
+            x=False
+            y=False
             #break
         else:
             led2.on()
@@ -408,11 +329,7 @@ while True:
                 print("Cat2 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat2playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+
                 cat2playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -500,11 +417,7 @@ while True:
                 print("Cat3 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat3playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat3playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -592,11 +505,7 @@ while True:
                 print("Cat4 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat4playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat4playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -684,11 +593,7 @@ while True:
                 print("Cat5 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat5playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat5playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -776,11 +681,7 @@ while True:
                 print("Cat6 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat6playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat6playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -868,11 +769,7 @@ while True:
                 print("Cat7 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat7playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat7playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -960,11 +857,7 @@ while True:
                 print("Cat8 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat8playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat8playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -1051,11 +944,7 @@ while True:
                 print("Cat9 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat9playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat9playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -1142,11 +1031,7 @@ while True:
                 print("Cat10 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat10playpause == True:
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostop.wav")
+                stop_radio(stop_audio.radiostop)
                 cat10playpause = False
                 playpause = False
             elif is_connected(remote_server):

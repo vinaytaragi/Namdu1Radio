@@ -12,6 +12,9 @@ from datetime import datetime
 from subprocess import check_output
 import shutil
 from dualled import DualLED
+import logging
+
+
 
 
 ''' *** Global Functions *** '''
@@ -96,8 +99,11 @@ def copy2Gdir_to_drvie(path1,path2,filename,recording_path):
     os.system(src_Path)
     print ("upload success !!!")
     time.sleep(0.1)
+
+
 def record(led,button,stopaudio,recording_path,uploadpath):
             led.on()
+            print("recording has started")
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
             #time.sleep(0.4)
@@ -121,5 +127,13 @@ def record(led,button,stopaudio,recording_path,uploadpath):
             #save the recorded audio in .upload folder respective category
             os.system("sudo cp "+recording_path+"/"+recFileName+".mp3 " +uploadpath+"/"+recFileName+".mp3 &")
             os.system("pkill -9 aplay")            
-            #os.system("rm "+recording_path+"/recorded_audio.wav") #remove the recorded file
-           
+            #os.system("rm "+recording_path+"/recorded_audio.wav") #remove the recorded file 
+    
+def stop_radio(audio):    
+    os.system("killall chromium-browser")
+    os.system("pkill -o chromium")
+    os.system("pkill -9 aplay")
+    logging.info("closing the radio button")
+    
+    time.sleep(0.4)
+    aplay(audio)          

@@ -54,8 +54,7 @@
      // Sorts files
      //sort($dirArray);
        rsort($dirArray);//sorting in descendi
-       ng order
-
+      
       // print($indexCount);
 	
      $flag=0;
