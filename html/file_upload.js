@@ -10,7 +10,7 @@ function handleFileupload(fileid,id) {
 
 function uploadFile(name,fileid) {
   var file =fileid.files[0];
- // alert(file.name+' | '+file.size+' | '+file.type);
+  alert(file.name+' | '+file.size+' | '+file.type);
   console.log(file);
   if(!file){
     alert("Please select a file first.");
@@ -21,12 +21,11 @@ function uploadFile(name,fileid) {
    window.location.reload(); 
   
   }
-  else if((file.name.split(".")[1]!="mp3") ||(file.name.split(".")[1]!="wav")){
+  else if(file.name.split(".")[1]!="mp3" && (file.name.split(".")[1]!="wav")){
     alert("Please select the corret filtype mp3 or wav.");
     window.location.reload(); 
 
-  }
-    
+  }    
   else{
   
   var formdata = new FormData();
