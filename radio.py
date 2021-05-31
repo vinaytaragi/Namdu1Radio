@@ -214,7 +214,8 @@ while True:
                 (but5.is_pressed) or (but6.is_pressed) or (but7.is_pressed) or 
                 (but8.is_pressed) or (but9.is_pressed) or (but10.is_pressed) or (but11.is_pressed)):
                     #if any of the buttons 2 to 9 is also pressed and held, then shutdown the Pi
-                    shutdownPi()
+                   # shutdownPi()
+                   print("hi")
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
                 aplay("beep_cat1.wav")
@@ -1076,7 +1077,8 @@ while True:
                 or but7.is_pressed or but8.is_pressed or but9.is_pressed \
                 or but10.is_pressed :
                     #if any of the buttons 1 to 9 is also pressed and held, then shutdown the Pi
-                    shutdownPi()
+                   # shutdownPi()
+                   print("hi")
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
                 #break
