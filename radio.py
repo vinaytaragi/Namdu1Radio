@@ -105,7 +105,7 @@ uploadpathcat9 = uploadpath + "/cat9"
 uploadpathcat10 = uploadpath + "/cat10"
 uploadpathcat11 = uploadpath + "/gencat"
 
-stop_audio_list=[i for i in os.listdir("~/Namdu1Radio/audio-alert/") if "stop" in i]
+stop_audio_list=[i for i in os.listdir("/home/pi/Namdu1Radio/audio-alert/") if "stop" in i]
 stop_audio_list
 names=[]
 for i in stop_audio_list:
