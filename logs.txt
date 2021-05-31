@@ -1,0 +1,43 @@
+python radio.py 
+pi Started
+Playing WAVE '/home/pi/Namdu1Radio/audio-alert/lappiready.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo
+pi Running
+starting namma school radio from internet
+Playing WAVE '/home/pi/Namdu1Radio/audio-alert/radiostart.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo
+ --disable-quic --enable-tcp-fast-open --ppapi-flash-path=/usr/lib/chromium-browser/libpepflashplayer.so --ppapi-flash-args=enable_stagevideo_auto=0 --ppapi-flash-version=
+2021/05/31 21:45:28 Fatal error: Directory is not empty: /home/pi/mnt/gdrive If you want to mount it anyway use: --allow-non-empty option
+[20138:20327:0531/214530.208206:ERROR:object_proxy.cc(622)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/UPower: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+[20138:20327:0531/214530.210741:ERROR:object_proxy.cc(622)] Failed to call method: org.freedesktop.UPower.GetDisplayDevice: object_path= /org/freedesktop/UPower: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+[20138:20327:0531/214530.213110:ERROR:object_proxy.cc(622)] Failed to call method: org.freedesktop.UPower.EnumerateDevices: object_path= /org/freedesktop/UPower: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
+pi Running
