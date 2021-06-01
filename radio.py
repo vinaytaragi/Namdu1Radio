@@ -53,36 +53,7 @@ stop_audio=dict(zip(names,stop_audio_list))
     #audiolab.wavwrite(c, 'file3.wav', fs, enc)
     #return file3.wav
 
-#LED's config:
-#------------
-led1 = LED(18) #GPIO18 - LED1
-led2 = LED(23) #GPIO23 - LED2
-#led3 = LED(24) #GPIO24 - LED3
-led4 = LED(25) #GPIO25 - LED4
-led5 = LED(8)  #GPIO8  - LED5
-led6 = LED(7)  #GPIO7  - LED6
-led7 = LED(12) #GPIO12 - LED7
-led8 = LED(16) #GPIO16 - LED8
-led9 = LED(20) #GPIO20 - LED9
-#led11 = LED(21) #GPIO21 - LED11
-led10 = LED(14) #GPIO14 - LED10
 
-led = None
-led = DualLED(21,24)
-
-#GPIO's config:
-#-------------
-but1 = Button(17) #17 - cat1
-but2 = Button(27) #27 - cat2
-but3 = Button(22) #22 - cat3
-but4 = Button(10) #10 - cat4
-but5 = Button(9)  #9  - cat5
-but6 = Button(11) #11 - cat6
-but7 = Button(5)  #5  - cat7
-but8 = Button(6)  #6  - cat8
-but9 = Button(13) #13 - cat9
-but10 = Button(19)#19 - cat10
-but11 = Button(26)#26 - cat11
 
 # *** Setting up GPIO of Pi *** #
 GPIO.setmode(GPIO.BCM)
@@ -93,7 +64,7 @@ print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
 #time.sleep(3.0)
-record(led1,but1,stop_audio["Cat1"],recordingpathcat1,uploadpathcat1) 
+ 
 while True:
     print("pi Running")
     #led.off()
@@ -133,9 +104,9 @@ while True:
         cntr = False
         playpause = True
         time.sleep(0.2)
-    x=True
+    
     ''' if button1 is pressed - Category 1 functionality button '''
-    if x:                                     #changeing for testing form but1.ispressed to true change back when done testing
+    if but1.is_pressed:                                     #changeing for testing form but1.ispressed to true change back when done testing
         print("button1 pressed")
         previousTime = time.time()
         while but1.is_pressed:
@@ -153,16 +124,15 @@ while True:
                 #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
-        y=True
-        if y:
-            record(led1,but1,stop_audio.Cat1,recordingpathcat1,uploadpathcat1)           
+    
+        if longpress:
+            record(led1,but1,stop_audio["Cat1"],recordingpathcat1,uploadpathcat1)           
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat1playpause = True
             cat1preview = True
             led1.off()
-            x=False
-            y=False
+            
             #break
         else:
             led1.on()
@@ -222,39 +192,16 @@ while True:
                 #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
-        y=True
-        if y:
-            led2.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat2.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but2.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat2_stop.wav")
-            print("Cat2 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat2+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat2+"/"+recFileName+".mp3 " +uploadpathcat2+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
+        
+        if longpress:
+            record(led2,but2,stop_audio["Cat2"],recordingpathcat2,uploadpathcat2)
+                   
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat2playpause = True
             cat2preview = True
             led2.off()
-            x=False
-            y=False
+            
             #break
         else:
             led2.on()
@@ -314,35 +261,14 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
+            
+            record(led3,but3,stop_audio["Cat3"],recordingpathcat3,uploadpathcat3) 
             #led3.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat3.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but3.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat3_stop.wav")
-            print("Cat3 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat3+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat3+"/"+recFileName+".mp3 " +uploadpathcat3+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+
             longpress = False
             cat3playpause = True
             cat3preview = True
-            #led3.off()
+        #led3.off()
             #break
         else:
             #led3.on()
@@ -402,31 +328,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led4.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat4.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but4.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat4_stop.wav")
-            print("Cat4 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat4+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat4+"/"+recFileName+".mp3 " +uploadpathcat4+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led4,but1,stop_audio["Cat4"],recordingpathcat4,uploadpathcat4)
             longpress = False
             cat4playpause = True
             cat4preview = True
@@ -490,31 +392,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led5.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat5.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but5.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat5_stop.wav")
-            print("Cat5 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat5+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat5+"/"+recFileName+".mp3 " +uploadpathcat5+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led5,but5,stop_audio["Cat5"],recordingpathcat5,uploadpathcat5)
             longpress = False
             cat5playpause = True
             cat5preview = True
@@ -578,31 +456,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led6.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat6.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but6.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat6_stop.wav")
-            print("Cat6 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat6+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat6+"/"+recFileName+".mp3 " +uploadpathcat6+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led6,but6,stop_audio["Cat6"],recordingpathcat6,uploadpathcat6)
             longpress = False
             cat6playpause = True
             cat6preview = True
@@ -666,31 +520,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led7.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat7.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but7.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat7_stop.wav")
-            print("Cat7 recording stopped")
-            time.sleep(4.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat7+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat7+"/"+recFileName+".mp3 " +uploadpathcat7+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led7,but7,stop_audio["Cat7"],recordingpathcat7,uploadpathcat7)
             longpress = False
             cat7playpause = True
             cat7preview = True
@@ -754,31 +584,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led8.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat8.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but8.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat8_stop.wav")
-            print("Cat8 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat8+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat8+"/"+recFileName+".mp3 " +uploadpathcat8+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led8,but8,stop_audio["Cat8"],recordingpathcat8,uploadpathcat8)
             longpress = False
             cat8playpause = True
             cat8preview = True
@@ -842,30 +648,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led9.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #time.sleep(0.4)
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat9.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but9.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            aplay("Cat9_stop.wav")
-            print("Cat9 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat9+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat9+"/"+recFileName+".mp3 " +uploadpathcat9+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led9,but9,stop_audio["Cat9"],recordingpathcat9,uploadpathcat9)
             longpress = False
             cat9playpause = True
             cat9preview = True
@@ -929,30 +712,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led10.on()
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            #aplay("beep_cat10.wav")
-            time.sleep(1.0)
-            # records with 48000 quality
-            arecord("recorded_audio.wav") 
-            # scan for button press to stop recording
-            but10.wait_for_press()
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            time.sleep(0.4)
-            aplay("Cat10_stop.wav")
-            print("Cat10 recording stopped")
-            time.sleep(5.0)
-            previewplay("recorded_audio.wav")
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # converting recorded audio to mp3 and rename with date and time of recording
-            os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat10+"/"+recFileName+".mp3")
-            #save the recorded audio in .upload folder respective category
-            os.system("sudo cp "+recordingpathcat10+"/"+recFileName+".mp3 " +uploadpathcat10+"/"+recFileName+".mp3 &")
-            os.system("pkill -9 aplay")            
-            #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
+            record(led10,but10,stop_audio["Cat10"],recordingpathcat10,uploadpathcat10)
             longpress = False
             cat10playpause = True
             cat10preview = True
