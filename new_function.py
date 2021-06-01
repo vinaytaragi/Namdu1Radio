@@ -134,4 +134,16 @@ def stop_radio(audio):
     logging.info("closing the radio button")
     
     time.sleep(0.4)
-    aplay(audio)          
+    aplay(audio)       
+
+
+def start_radio_from_internet():
+    os.system("killall chromium-browser")
+    os.system("pkill -o chromium")
+    print ("starting namma school radio from internet")
+    os.system("pkill -9 aplay")
+    time.sleep(0.4)
+    aplay("radiostart.wav")
+    time.sleep(3.0)
+    os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/thanmayi-school-radio &")                        
+   

@@ -147,14 +147,8 @@ while True:
                 cat1playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat1")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/sadbhavana-radio &")                        
+                start_radio_from_internet()
+                   
                 playpause = True
                 cat1playpause = True
             elif not pfiles:
@@ -215,14 +209,8 @@ while True:
                 cat2playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat2")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/siddaganga-school &")                        
+                start_radio_from_internet()
+                                        
                 playpause = True
                 cat2playpause = True
             elif not pfiles:
@@ -282,14 +270,7 @@ while True:
                 cat3playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat3")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/kowil-radio &")                        
+                start_radio_from_internet()                        
                 playpause = True
                 cat3playpause = True
             elif not pfiles:
@@ -346,14 +327,7 @@ while True:
                 cat4playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat4")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/budakattu-radio &")                        
+                start_radio_from_internet()
                 playpause = True
                 cat4playpause = True
             elif not pfiles:
@@ -410,14 +384,7 @@ while True:
                 cat5playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat5")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/tvs-school-radio &")                        
+                start_radio_from_internet()
                 playpause = True
                 cat5playpause = True
             elif not pfiles:
@@ -474,14 +441,7 @@ while True:
                 cat6playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat5")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/christ-school &")                        
+                start_radio_from_internet()
                 playpause = True
                 cat6playpause = True
             elif not pfiles:
@@ -538,14 +498,8 @@ while True:
                 cat7playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat7")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/budakattu-radio &")                        
+                start_radio_from_internet()
+
                 playpause = True
                 cat7playpause = True
             elif not pfiles:
@@ -604,14 +558,7 @@ while True:
                 cat8playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat8")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/gajanooru-radio &")                        
+                start_radio_from_internet()
                 playpause = True
                 cat8playpause = True
             elif not pfiles:
@@ -668,14 +615,7 @@ while True:
                 cat9playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat9")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/dhamma-chitra-durga &")                        
+                start_radio_from_internet()
                 playpause = True
                 cat9playpause = True
             elif not pfiles:
@@ -732,14 +672,7 @@ while True:
                 cat10playpause = False
                 playpause = False
             elif is_connected(remote_server):
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                print ("starting namma school radio from internet cat10")
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("radiostart.wav")
-                time.sleep(3.0)
-                os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/thanmayi-school-radio &")                        
+                start_radio_from_internet()
                 playpause = True
                 cat10playpause = True
             elif not pfiles:
@@ -835,13 +768,7 @@ while True:
                 playpause = True
             # Check whether the internet is available to play from the website
             elif is_connected(remote_server):
-                print ("starting namma school radio from internet")
-                os.system("pkill -9 aplay")
-                os.system("pkill -o chromium")
-                os.system("killall chromium-browser")
-                aplay("radiostart.wav")
-                os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &") 
-                time.sleep(0.4)                        
+                start_radio_from_internet()                      
                 playpause = True
             else:
                 print ("Button11 general playback started")
