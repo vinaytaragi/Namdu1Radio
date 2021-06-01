@@ -145,5 +145,6 @@ def start_radio_from_internet():
     time.sleep(0.4)
     aplay("radiostart.wav")
     time.sleep(3.0)
-    os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/thanmayi-school-radio &")                        
-   
+    os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/thanmayi-school-radio &")     
+
+                 
