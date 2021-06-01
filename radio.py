@@ -36,8 +36,8 @@ from globle_var import *
 
 
 stop_audio_list=[i for i in os.listdir("/home/pi/Namdu1Radio/audio-alert/") if "stop" in i]
-stop_audio_list
 names=[]
+print(names)
 for i in stop_audio_list:
     if "_" in i:
         names.append(i.split("_")[0])
