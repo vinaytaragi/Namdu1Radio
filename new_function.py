@@ -111,7 +111,7 @@ def record(button,stopaudio,recording_path,uploadpath,led=None):
             arecord(previewaudioguidepath,"recorded_audio.wav") 
             # scan for button press to stop recording
            
-            button.wait_for_press(timeout=300) # to be discussed
+            button.wait_for_press(timeout=10) # to be discussed
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             time.sleep(0.4)
