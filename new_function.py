@@ -110,7 +110,8 @@ def record(led,button,stopaudio,recording_path,uploadpath):
             # records with 48000 quality
             arecord("/home/pi","recorded_audio.wav") 
             # scan for button press to stop recording
-            button.wait_for_press()
+            time.sleep(1)
+            #button.wait_for_press()
             os.system("pkill -9 arecord")
             os.system("pkill -9 aplay")
             time.sleep(0.4)
