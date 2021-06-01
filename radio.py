@@ -152,16 +152,19 @@ while True:
                 #break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
-        if longpress:
+        y=True
+        if y:
             record(led1,but1,stop_audio.Cat1,recordingpathcat1,uploadpathcat1)           
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat1playpause = True
             cat1preview = True
             led1.off()
+            x=False
+            y=False
             #break
         else:
-            led1.on(au)
+            led1.on()
             pfiles = os.listdir(uploadpathcat1)
             if cat1preview == True:
                 cat1preview = False
