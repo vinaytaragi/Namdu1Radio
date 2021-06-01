@@ -43,7 +43,7 @@ for i in stop_audio_list:
         names.append(i.split("_")[0])
     else:
         names.append(i.split(".")[0])
-print(names)
+
 stop_audio=dict(zip(names,stop_audio_list))
 
 #def wavFilesJoin(file1,file):
@@ -93,7 +93,7 @@ print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
 #time.sleep(3.0)
-record(led1,but1,stop_audio.Cat1,recordingpathcat1,uploadpathcat1) 
+record(led1,but1,stop_audio["Cat1"],recordingpathcat1,uploadpathcat1) 
 while True:
     print("pi Running")
     #led.off()
