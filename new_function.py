@@ -108,7 +108,7 @@ def record(led,button,stopaudio,recording_path,uploadpath):
             #aplay("beep_cat1.wav")
             time.sleep(1.0)
             # records with 48000 quality
-            arecord("/home/pi","recorded_audio.wav") 
+            arecord(previewaudioguidepath,"recorded_audio.wav") 
             # scan for button press to stop recording
             time.sleep(1)
             #button.wait_for_press()
@@ -118,7 +118,7 @@ def record(led,button,stopaudio,recording_path,uploadpath):
             aplay(stopaudio)
             print("recording stopped")
             time.sleep(5.0)
-            previewplay("/home/pi","recorded_audio.wav")
+            previewplay(previewaudioguidepath,"recorded_audio.wav")
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # converting recorded audio to mp3 and rename with date and time of recording
             os.system("lame -b 320 "+previewaudioguidepath+"/recorded_audio.wav " +recording_path+"/"+recFileName+".mp3")
