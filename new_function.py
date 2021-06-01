@@ -1,9 +1,6 @@
-import os
+
 import time
-import RPi.GPIO as GPIO
-from gpiozero import LED, Button
-import time
-import os
+import os,sys
 import socket
 import subprocess
 import wave
@@ -11,8 +8,8 @@ import contextlib
 from datetime import datetime
 from subprocess import check_output
 import shutil
-from dualled import DualLED
 import logging
+from globle_var import *
 
 
 
@@ -104,7 +101,7 @@ def copy2Gdir_to_drvie(path1,path2,filename,recording_path):
 def record(led,button,stopaudio,recording_path,uploadpath):
             led.on()
             print("recording has started")
-            os.system("killall chromium-browser")
+            os.system("kill ll chromium-browser")
             os.system("pkill -o chromium")
             #time.sleep(0.4)
             #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
