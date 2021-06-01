@@ -582,7 +582,7 @@ while True:
                 #if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
                 aplay("beep_cat8.wav")
-                #break
+                break
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
