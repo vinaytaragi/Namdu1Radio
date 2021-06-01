@@ -566,10 +566,12 @@ while True:
                 playpause = True               
             led7.off()
     ''' if button8 is pressed - Category 8 functionality button '''
-    if but8.is_pressed:
+    y=True
+    x=True
+    if x:
         print("button8 pressed")
         previousTime = time.time()
-        while but8.is_pressed:
+        while x:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
                 if((but1.is_pressed) or (but2.is_pressed) or (but3.is_pressed)or  
