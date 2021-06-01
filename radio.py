@@ -93,6 +93,7 @@ print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
 #time.sleep(3.0)
+record(led1,but1,stop_audio.Cat1,recordingpathcat1,uploadpathcat1) 
 while True:
     print("pi Running")
     #led.off()
