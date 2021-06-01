@@ -146,5 +146,43 @@ def start_radio_from_internet():
     aplay("radiostart.wav")
     time.sleep(3.0)
     os.system("chromium-browser --kiosk --app=https://www.namdu1radio.com/thanmayi-school-radio &")     
+#use first letter as a capital latter while defining catname
+def playaudio(catname,led=None,preview_status=None):
+            if led:                 
+                led.on()
+            global cat1playpause
+            global playpause
+            pfiles = os.listdir(uploadpathcat1)
+            if preview_status == True:
+                preview_status = False
+                print(catname+" preview stopped")
+                os.system("pkill -9 aplay")
+                
+            elif cat1playpause == True:
+                stop_radio(stop_audio.radiostop)
 
-                 
+                cat1playpause = False
+                playpause = False
+            elif is_connected(remote_server):
+                start_radio_from_internet()
+                   
+                playpause = True
+                cat1playpause = True
+            elif not pfiles:
+                print("No files to play in "+catname)
+             #   aplay("NofilesinCat1.wav") ask girish ji about these files.
+            else:
+                os.system("pkill -9 aplay")
+                time.sleep(0.4)
+                aplay(audioguidepath,catname+".wav")
+                time.sleep(0.4)
+                os.system("killall chromium-browser")
+                os.system("pkill -o chromium")
+                src_renamPath = "/".join(uploadpath.split("/")[1:4])+'/indexcat1.php'
+                dst_renamPath = "/".join(uploadpath.split("/")[1:4])+'/index.php'
+                shutil.copy(src_renamPath, dst_renamPath)
+                os.system("chromium-browser localhost &")
+                time.sleep(0.2)
+                playpause = True
+                if led:               
+                    led.off()
