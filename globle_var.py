@@ -81,7 +81,7 @@ uploadpathcat11 = uploadpath + "/gencat"
 #------------
 led1 = LED(18) #GPIO18 - LED1
 led2 = LED(23) #GPIO23 - LED2
-led3 = LED(24) #GPIO24 - LED3
+#led3 = LED(24) #GPIO24 - LED3
 led4 = LED(25) #GPIO25 - LED4
 led5 = LED(8)  #GPIO8  - LED5
 led6 = LED(7)  #GPIO7  - LED6

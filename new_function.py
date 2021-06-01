@@ -98,8 +98,9 @@ def copy2Gdir_to_drvie(path1,path2,filename,recording_path):
     time.sleep(0.1)
 
 
-def record(led,button,stopaudio,recording_path,uploadpath):
-            led.on()
+def record(button,stopaudio,recording_path,uploadpath,led=None):
+            if led:
+                led.on()
             print("recording has started")
             os.system("kill ll chromium-browser")
             os.system("pkill -o chromium")

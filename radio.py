@@ -126,7 +126,7 @@ while True:
         time.sleep(0.5)
     
         if longpress:
-            record(led1,but1,stop_audio["Cat1"],recordingpathcat1,uploadpathcat1)           
+            record(but1,stop_audio["Cat1"],recordingpathcat1,uploadpathcat1,led1)           
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
             cat1playpause = True
@@ -194,7 +194,7 @@ while True:
         time.sleep(0.5)
         
         if longpress:
-            record(led2,but2,stop_audio["Cat2"],recordingpathcat2,uploadpathcat2)
+            record(but2,stop_audio["Cat2"],recordingpathcat2,uploadpathcat2,led2)
                    
             #os.system("rm "+recordingpathcat1+"/recorded_audio.wav") #remove the recorded file
             longpress = False
@@ -262,7 +262,7 @@ while True:
         time.sleep(0.5)
         if longpress:
             
-            record(led3,but3,stop_audio["Cat3"],recordingpathcat3,uploadpathcat3) 
+            record(but3,stop_audio["Cat3"],recordingpathcat3,uploadpathcat3) 
             #led3.on()
 
             longpress = False
@@ -328,7 +328,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led4,but1,stop_audio["Cat4"],recordingpathcat4,uploadpathcat4)
+            record(but1,stop_audio["Cat4"],recordingpathcat4,uploadpathcat4,led4)
             longpress = False
             cat4playpause = True
             cat4preview = True
@@ -392,7 +392,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led5,but5,stop_audio["Cat5"],recordingpathcat5,uploadpathcat5)
+            record(but5,stop_audio["Cat5"],recordingpathcat5,uploadpathcat5,led5)
             longpress = False
             cat5playpause = True
             cat5preview = True
@@ -456,7 +456,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led6,but6,stop_audio["Cat6"],recordingpathcat6,uploadpathcat6)
+            record(led6,but6,stop_audio["Cat6"],recordingpathcat6,uploadpathcat6,led6)
             longpress = False
             cat6playpause = True
             cat6preview = True
@@ -520,7 +520,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led7,but7,stop_audio["Cat7"],recordingpathcat7,uploadpathcat7)
+            record(but7,stop_audio["Cat7"],recordingpathcat7,uploadpathcat7,led7)
             longpress = False
             cat7playpause = True
             cat7preview = True
@@ -584,7 +584,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led8,but8,stop_audio["Cat8"],recordingpathcat8,uploadpathcat8)
+            record(but8,stop_audio["Cat8"],recordingpathcat8,uploadpathcat8,led8)
             longpress = False
             cat8playpause = True
             cat8preview = True
@@ -648,7 +648,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led9,but9,stop_audio["Cat9"],recordingpathcat9,uploadpathcat9)
+            record(but9,stop_audio["Cat9"],recordingpathcat9,uploadpathcat9,led9)
             longpress = False
             cat9playpause = True
             cat9preview = True
@@ -712,7 +712,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            record(led10,but10,stop_audio["Cat10"],recordingpathcat10,uploadpathcat10)
+            record(but10,stop_audio["Cat10"],recordingpathcat10,uploadpathcat10,led10)
             longpress = False
             cat10playpause = True
             cat10preview = True
