@@ -37,13 +37,13 @@ from globle_var import *
 
 stop_audio_list=[i for i in os.listdir("/home/pi/Namdu1Radio/audio-alert/") if "stop" in i]
 names=[]
-print(names)
+
 for i in stop_audio_list:
     if "_" in i:
         names.append(i.split("_")[0])
     else:
         names.append(i.split(".")[0])
-names
+print(names)
 stop_audio=dict(zip(names,stop_audio_list))
 
 #def wavFilesJoin(file1,file):
