@@ -1,6 +1,6 @@
 <html>
  <head>
- <script src="./file_upload.js"></script> 
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <style type="text/css">
     #playlist,audio{background:#666;width:400px;padding:20px;}
@@ -176,7 +176,7 @@ submitBtn.addEventListener('click', function(){uploadFile('$name',$fileid)});
     src="./jquery-1.7.js"
     
   ></script>
-
+  <script src='./MediaUpload/audio.js'></script>
   
  
 </html>
