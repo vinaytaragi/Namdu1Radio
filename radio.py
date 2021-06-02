@@ -35,16 +35,6 @@ from globle_var import *
 
 
 
-stop_audio_list=[i for i in os.listdir("/home/pi/Namdu1Radio/audio-alert/") if "stop" in i]
-names=[]
-
-for i in stop_audio_list:
-    if "_" in i:
-        names.append(i.split("_")[0])
-    else:
-        names.append(i.split(".")[0])
-
-stop_audio=dict(zip(names,stop_audio_list))
 
 #def wavFilesJoin(file1,file):
     #a, fs, enc = audiolab.wavread('file1')
@@ -64,7 +54,7 @@ print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
 #time.sleep(3.0)
- 
+start_radio_from_internet() 
 while True:
     print("pi Running")
     #led.off()
@@ -106,9 +96,12 @@ while True:
         time.sleep(0.2)
     
     ''' if button1 is pressed - Category 1 functionality button '''
-    if but1.is_pressed:                                     #changeing for testing form but1.ispressed to true change back when done testing
+    x=True
+    if x:                                     #changeing for testing form but1.ispressed to true change back when done testing
         print("button1 pressed")
         previousTime = time.time()
+        time.sleep(0.2)
+        x=False
         while but1.is_pressed:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
@@ -135,39 +128,8 @@ while True:
             
             #break
         else:
-            led1.on()
-            pfiles = os.listdir(uploadpathcat1)
-            if cat1preview == True:
-                cat1preview = False
-                print("Cat1 preview stopped")
-                os.system("pkill -9 aplay")
-            elif cat1playpause == True:
-                stop_radio(stop_audio.radiostop)
-
-                cat1playpause = False
-                playpause = False
-            elif is_connected(remote_server):
-                start_radio_from_internet()
-                   
-                playpause = True
-                cat1playpause = True
-            elif not pfiles:
-                print("No files to play in cat1")
-                aplay("NofilesinCat1.wav")
-            else:
-                os.system("pkill -9 aplay")
-                time.sleep(0.4)
-                aplay("Cat1.wav")
-                time.sleep(0.4)
-                os.system("killall chromium-browser")
-                os.system("pkill -o chromium")
-                src_renamPath = r'/var/www/html/indexcat1.php'
-                dst_renamPath = r'/var/www/html/index.php'
-                shutil.copy(src_renamPath, dst_renamPath)
-                os.system("chromium-browser localhost &")
-                time.sleep(0.2)
-                playpause = True               
-            led1.off()
+            playaudio("Cat1",led1,cat10preview)
+            
     ''' if button2 is pressed - Category 2 functionality button '''
     if but2.is_pressed:
         print("button2 pressed")
