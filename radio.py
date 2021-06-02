@@ -129,6 +129,7 @@ while True:
             
             #break
         else:
+            cat1playpause=False
             playaudio("Cat1",led1,cat10preview)
             
     ''' if button2 is pressed - Category 2 functionality button '''
