@@ -133,7 +133,7 @@ def stop_radio():
     logging.info("closing the radio button")
     
     time.sleep(0.4)
-    aplay("/home/pi/Namdu1Radio/audio-alert","radiostop.wav")       
+    aplay("radiostop.wav")       
 
 
 def start_radio_from_internet():
