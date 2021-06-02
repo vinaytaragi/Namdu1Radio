@@ -29,6 +29,7 @@ import sys
 sys.path.append("/home/pi/Namdu1Radio/")
 from globle_var import *
 
+
 #logging.basicConfig(filename="/opt/logfilename.log", level=logging.INFO)
 
 # *** Global Variables *** #
@@ -228,7 +229,7 @@ while True:
                 print("Cat3 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat3playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat3playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -285,7 +286,7 @@ while True:
                 print("Cat4 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat4playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat4playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -342,7 +343,7 @@ while True:
                 print("Cat5 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat5playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat5playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -399,7 +400,7 @@ while True:
                 print("Cat6 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat6playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat6playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -456,7 +457,7 @@ while True:
                 print("Cat7 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat7playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat7playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -515,7 +516,7 @@ while True:
                 print("Cat8 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat8playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat8playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -572,7 +573,7 @@ while True:
                 print("Cat9 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat9playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat9playpause = False
                 playpause = False
             elif is_connected(remote_server):
@@ -629,7 +630,7 @@ while True:
                 print("Cat10 preview stopped")
                 os.system("pkill -9 aplay")
             elif cat10playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
                 cat10playpause = False
                 playpause = False
             elif is_connected(remote_server):

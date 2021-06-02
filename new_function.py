@@ -12,7 +12,6 @@ from globle_var import *
 
 
 
-
 ''' *** Global Functions *** '''
 '''
     To check if Pi is connected to internet or local server
@@ -127,14 +126,14 @@ def record(button,stopaudio,recording_path,uploadpath,led=None):
             os.system("pkill -9 aplay")            
             #os.system("rm "+recording_path+"/recorded_audio.wav") #remove the recorded file 
     
-def stop_radio(audio):    
+def stop_radio():    
     os.system("killall chromium-browser")
     os.system("pkill -o chromium")
     os.system("pkill -9 aplay")
     logging.info("closing the radio button")
     
     time.sleep(0.4)
-    aplay(audio)       
+    aplay("/home/pi/Namdu1Radio/audio-alert","radiostop.wav")       
 
 
 def start_radio_from_internet():
@@ -159,7 +158,7 @@ def playaudio(catname,led=None,preview_status=None):
                 os.system("pkill -9 aplay")
                 
             elif cat1playpause == True:
-                stop_radio(stop_audio.radiostop)
+                stop_radio()
 
                 cat1playpause = False
                 playpause = False

@@ -3,6 +3,18 @@ from gpiozero import LED, Button
 from dualled import DualLED
 
 import os
+
+stop_audio_list=[i for i in os.listdir("/home/pi/Namdu1Radio/audio-alert/") if "stop" in i]
+names=[]
+
+for i in stop_audio_list:
+    if "_" in i:
+        names.append(i.split("_")[0])
+    else:
+        names.append(i.split(".")[0])
+
+stop_audio=dict(zip(names,stop_audio_list))
+
 previousTime = False
 but1n2_pressed = False
 ret = "Hello"
