@@ -173,7 +173,7 @@ def playaudio(catname,led=None,preview_status=None):
             else:
                 os.system("pkill -9 aplay")
                 time.sleep(0.4)
-                aplay(audioguidepath,catname+".wav")
+                aplay(catname+".wav")
                 time.sleep(0.4)
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
