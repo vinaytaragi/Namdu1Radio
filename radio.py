@@ -714,7 +714,7 @@ while True:
         elif x:
             f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
             filepath=f.readline()
-            name_prefix=filepath.split(".")[1].split["/"][-1]
+            name_prefix=filepath.split(".")[1].split("/")[-1]
             led.fwd_blink("slow")
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
