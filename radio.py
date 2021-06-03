@@ -734,7 +734,7 @@ while True:
                 # records with 48000 quality
                 arecord(previewaudioguidepath, "audio.wav")
                 # scan for button press to stop recording
-                but11.wait_for_press(10)
+                but11.wait_for_press(30)
                 os.system("pkill -9 arecord")
                 os.system("pkill -9 aplay")
                 aplay("Catgen_stop.wav")
