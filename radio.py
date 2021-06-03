@@ -703,7 +703,8 @@ while True:
                 os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav")
                 
                 # scan for button press to stop recording
-                but11.wait_for_press(10) #for test
+               # but11.wait_for_press(10) #for test
+                time.sleep(5)
                 os.system("pkill -9 arecord")
                 os.system("pkill -9 aplay")
                 aplay("Catgen_stop.wav")
