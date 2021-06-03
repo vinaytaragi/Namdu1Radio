@@ -685,7 +685,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            if chromium_running:
+            if False:
                 f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
                 filepath=f.readline()
                 name_prefix=filepath.split(".")[1].split("/")[-1]
