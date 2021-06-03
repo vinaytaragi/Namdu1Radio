@@ -91,7 +91,7 @@ while True:
         shutil.copy(src_renamPath, dst_renamPath)
         time.sleep(3)
         aplay("radiostart.wav")
-        os.system("chromium-browser --kiosk localhost/new &")
+        os.system("chromium-browser --kiosk localhost/new")
         cntr = False
         playpause = True
         time.sleep(0.2)
