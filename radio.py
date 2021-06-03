@@ -71,7 +71,7 @@ while True:
         cntr = False
         playpause = True
     #Check whether the internet is available to play from the website
-    elif is_connected(remote_server) and cntr:
+    elif is_connected(remote_server) and False:
         print ("starting namma school radio from internet")
         os.system("pkill -9 aplay")
         #time.sleep(3)
@@ -662,7 +662,7 @@ while True:
         #os.system("pkill -o chromium")
         print("buttons 11 pressed")
         previousTime = time.time()
-        p=False
+       
         while but11.is_pressed:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
@@ -677,6 +677,7 @@ while True:
                 longpress = True
                 #break
                 aplay("beep_catgen.wav")
+        p=False
         x=True
         y=True         # if longpress is True, record audio after a 'beep'
         if time.time() - previousTime < 0.1: continue
