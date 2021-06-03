@@ -15,6 +15,7 @@ for i in stop_audio_list:
 
 stop_audio=dict(zip(names,stop_audio_list))
 
+chromium_running=False
 previousTime = False
 but1n2_pressed = False
 ret = "Hello"

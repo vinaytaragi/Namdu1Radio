@@ -95,6 +95,7 @@ while True:
         cntr = False
         playpause = True
         time.sleep(0.2)
+        chromium_running=True
     
     ''' if button1 is pressed - Category 1 functionality button '''
     
@@ -684,65 +685,73 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            led.fwd_blink("slow")
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            print("Gencat recording started")
-            #aplay("beep_catgen.wav")
-            #time.sleep(1.0)
-            recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # records with 48000= quality
-            os.system("arecord "+previewaudioguidepath+recFileName+".wav")
-            # scan for button press to stop recording
-            but11.wait_for_press(30)
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            aplay("Catgen_stop.wav")
-            #time.sleep(1.4)
-            print("Gencat recording stopped")
-            #time.sleep(5.0)
-            previewplay(recordingpathcat11+recFileName+".wav")
-            os.system("cp "+previewaudioguidepath+"/"+recFileName+".wav " +recordingpathcat11+"/"+recFileName+".wav")
-            os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
-            os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
-            led.fwd_on()
-            longpress = False
-            gencatpreview = True
-           
-        elif False:
-            f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
-            filepath=f.readline()
-            name_prefix=filepath.split(".")[1].split("/")[-1]
-            led.fwd_blink("slow")
-            os.system("killall chromium-browser")
-            os.system("pkill -o chromium")
-            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            print("Gencat comment recording started")
-            #aplay("beep_catgen.wav")
-            #time.sleep(1.0)
-            recFileName = name_prefix+"comment"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # records with 48000 quality
-            os.system("arecord "+previewaudioguidepath+recFileName+".wav")
-            
-            # scan for button press to stop recording
-            but11.wait_for_press(30) #for test
-            os.system("pkill -9 arecord")
-            os.system("pkill -9 aplay")
-            aplay("Catgen_stop.wav")
-            #time.sleep(1.4)
-            print("Gencat recording stopped")
-            #time.sleep(5.0)
-            previewplay(recordingpathcat11, "recorded_audio.wav")
-            os.system("cp "+previewaudioguidepath+"/""recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".wav")
-            os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
-            os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
-            led.fwd_on()
-            longpress = False
-            gencatpreview = True
-            p=False
-            x=False
+            if chromium_running:
+                f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
+                filepath=f.readline()
+                name_prefix=filepath.split(".")[1].split("/")[-1]
+                led.fwd_blink("slow")
+                os.system("killall chromium-browser")
 
+                os.system("pkill -o chromium")
+                chromium_running=False
+                #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+                print("Gencat comment recording started")
+                #aplay("beep_catgen.wav")
+                #time.sleep(1.0)
+                recFileName = name_prefix+"comment"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
+                # records with 48000 quality
+                os.system("arecord "+previewaudioguidepath+recFileName+".wav")
+                
+                # scan for button press to stop recording
+                but11.wait_for_press(30) #for test
+                os.system("pkill -9 arecord")
+                os.system("pkill -9 aplay")
+                aplay("Catgen_stop.wav")
+                #time.sleep(1.4)
+                print("Gencat recording stopped")
+                #time.sleep(5.0)
+                previewplay(recordingpathcat11, "recorded_audio.wav")
+                os.system("cp "+previewaudioguidepath+"/""recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".wav")
+                os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
+                os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
+                led.fwd_on()
+                longpress = False
+                gencatpreview = True
+                p=False
+                x=False
+
+                 
+                 
+
+            else:    
+                led.fwd_blink("slow")
+                os.system("killall chromium-browser")
+                os.system("pkill -o chromium")
+                #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+                print("Gencat recording started")
+                #aplay("beep_catgen.wav")
+                #time.sleep(1.0)
+                recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
+                # records with 48000= quality
+                os.system("arecord "+previewaudioguidepath+recFileName+".wav")
+                # scan for button press to stop recording
+                but11.wait_for_press(30)
+                os.system("pkill -9 arecord")
+                os.system("pkill -9 aplay")
+                aplay("Catgen_stop.wav")
+                #time.sleep(1.4)
+                print("Gencat recording stopped")
+                #time.sleep(5.0)
+                previewplay(recordingpathcat11+recFileName+".wav")
+                os.system("cp "+previewaudioguidepath+"/"+recFileName+".wav " +recordingpathcat11+"/"+recFileName+".wav")
+                os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
+                os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
+                led.fwd_on()
+                longpress = False
+                gencatpreview = True
+            
+        
+           
         else:
 
             if gencatpreview == True:
@@ -754,6 +763,7 @@ while True:
                 print ("echo closing radio !!!")
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
+                chromium_running=False
                 os.system("pkill -9 aplay")
                 time.sleep(0.2)
                 aplay("radiostop.wav")
@@ -763,6 +773,7 @@ while True:
                 os.system("pkill -9 aplay")
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
+                chromium_running=False
                 print ("starting namma school radio....from local server ")
                 time.sleep(0.4)
                 aplay("radiostart.wav")
