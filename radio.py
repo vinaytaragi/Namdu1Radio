@@ -675,13 +675,12 @@ while True:
                    # shutdownPi()
                    print("hi")
                 # if the button is pressed for more than two seconds, then longpress is True
-            #    longpress = True
+                longpress = True
                 break
                 aplay("beep_catgen.wav")
                 p=False
 
-       
-        x=True     # if longpress is True, record audio after a 'beep'
+   # if longpress is True, record audio after a 'beep'
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
@@ -711,7 +710,7 @@ while True:
             longpress = False
             gencatpreview = True
            
-        elif x:
+        elif False:
             f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
             filepath=f.readline()
             name_prefix=filepath.split(".")[1].split("/")[-1]
