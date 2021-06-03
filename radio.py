@@ -662,6 +662,8 @@ while True:
         #os.system("pkill -o chromium")
         print("buttons 11 pressed")
         previousTime = time.time()
+        p=False
+
        
         while but11.is_pressed:
             #Check if the button is pressed for > 2sec
@@ -677,9 +679,9 @@ while True:
                 longpress = True
                 #break
                 aplay("beep_catgen.wav")
-        p=False
-        x=True
-        y=True         # if longpress is True, record audio after a 'beep'
+
+       
+        x=True     # if longpress is True, record audio after a 'beep'
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
@@ -709,7 +711,7 @@ while True:
             longpress = False
             gencatpreview = True
            
-        elif x and y:
+        elif x:
             f = open("MediaUpload/current_link.txt", "r")
             filepath=f.readline()
             name_prefix=filepath.split(".")[1].split["/"][-1]
