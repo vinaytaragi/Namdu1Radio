@@ -723,7 +723,8 @@ while True:
             #time.sleep(1.0)
             recFileName = name_prefix+"comment"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
             # records with 48000 quality
-            arecord(previewaudioguidepath, "recorded_audio.wav")
+            os.system("arecord "+previewaudioguidepath+recFileName+".wav")
+            
             # scan for button press to stop recording
             but11.wait_for_press(30) #for test
             os.system("pkill -9 arecord")
@@ -781,6 +782,7 @@ while True:
                 dst_renamPath = r'/var/www/html/index.php'
                 shutil.copy(src_renamPath, dst_renamPath)
                 #Starts playing mp3 from .upload folder
+                print("starting audio form localhost in gencat")
                 os.system("chromium-browser --kiosk localhost &")
                 time.sleep(0.2)
                 playpause = True
