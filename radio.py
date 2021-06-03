@@ -82,19 +82,19 @@ while True:
     #     time.sleep(5.0)
     #     cntr = False
         # playpause = True
-    elif cntr == True:
-        print ("Local and remote server not available")
-        print ("Audio starts from localhost")
-        os.system("pkill -9 aplay")
-        src_renamPath = r'/var/www/html/indexgencat.php'
-        dst_renamPath = r'/var/www/html/index.php'
-        shutil.copy(src_renamPath, dst_renamPath)
-        #time.sleep(3)
-        aplay("radiostart.wav")
-        os.system("chromium-browser --kiosk localhost &")
-        cntr = False
-        playpause = True
-        time.sleep(0.2)
+    # elif cntr == True:
+    #     print ("Local and remote server not available")
+    #     print ("Audio starts from localhost")
+    #     os.system("pkill -9 aplay")
+    #     src_renamPath = r'/var/www/html/indexgencat.php'
+    #     dst_renamPath = r'/var/www/html/index.php'
+    #     shutil.copy(src_renamPath, dst_renamPath)
+    #     time.sleep(3)
+    #     aplay("radiostart.wav")
+    #     os.system("chromium-browser --kiosk localhost &")
+    #     cntr = False
+    #     playpause = True
+    #     time.sleep(0.2)
     
     ''' if button1 is pressed - Category 1 functionality button '''
     
@@ -676,7 +676,7 @@ while True:
                    print("hi")
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                #break
+                break
                 aplay("beep_catgen.wav")
 
        
