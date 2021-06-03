@@ -20,16 +20,42 @@
             e.preventDefault();
             link = $(this);
             current = link.parent().index();
+            console.log(audio[0])
             run(link, audio[0]);
+            
             });
+            var ajax = new XMLHttpRequest();
             audio[0].addEventListener('ended',function(e){
             current++;
             if(current > len){
               current = 0;
               link = playlist.find('a')[0];
+              
+           //   console.log(link.href)
+              
+           $.post("./MediaUpload/write_link.php",
+           {
+             link: link.href,
+             
+           },
+     
+           //console.log(x)
+           
+           )
             }
           else{
-              link = playlist.find('a')[current];    
+              link = playlist.find('a')[current]; 
+             // console.log(x)
+              //let x={"link":link.href};
+              $.post("./MediaUpload/write_link.php",
+              {
+                link: link.href,
+                
+              },
+        
+              //console.log(x)
+              
+              )
             }
             run($(link),audio[0]);
             });

@@ -97,12 +97,12 @@ while True:
         time.sleep(0.2)
     
     ''' if button1 is pressed - Category 1 functionality button '''
-    x=True
-    if x:                                     #changeing for testing form but1.ispressed to true change back when done testing
+    
+    if but1.is_pressed:                                     #changeing for testing form but1.ispressed to true change back when done testing
         print("button1 pressed")
         previousTime = time.time()
         time.sleep(0.2)
-        x=False
+       
         while but1.is_pressed:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
@@ -656,11 +656,13 @@ while True:
                 playpause = True               
             led10.off()   
     '''upload and backup play functionality'''
-    if but11.is_pressed:
+    p=True
+    if p:
         #os.system("killall chromium-browser")
         #os.system("pkill -o chromium")
         print("buttons 11 pressed")
         previousTime = time.time()
+        p=False
         while but11.is_pressed:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
@@ -675,7 +677,8 @@ while True:
                 longpress = True
                 #break
                 aplay("beep_catgen.wav")
-                # if longpress is True, record audio after a 'beep'
+        x=True
+        y=True         # if longpress is True, record audio after a 'beep'
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
@@ -704,7 +707,40 @@ while True:
             led.fwd_on()
             longpress = False
             gencatpreview = True
+           
+        elif x and y:
+            f = open("MediaUpload/current_link.txt", "r")
+            filepath=f.readline()
+            name_prefix=filepath.split(".")[1].split["/"][-1]
+            led.fwd_blink("slow")
+            os.system("killall chromium-browser")
+            os.system("pkill -o chromium")
+            #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
+            print("Gencat recording started")
+            #aplay("beep_catgen.wav")
+            #time.sleep(1.0)
+            recFileName = name_prefix+"recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
+            # records with 48000 quality
+            arecord(previewaudioguidepath, recFileName+".wav")
+            # scan for button press to stop recording
+            but11.wait_for_press(3) #for test
+            os.system("pkill -9 arecord")
+            os.system("pkill -9 aplay")
+            aplay("Catgen_stop.wav")
+            #time.sleep(1.4)
+            print("Gencat recording stopped")
+            #time.sleep(5.0)
+            previewplay(recordingpathcat11, recFileName+".wav")
+            os.system("cp "+previewaudioguidepath+"/"+recFileName+".wav " +recordingpathcat11+"/"+recFileName+".wav")
+            os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
+            os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
+            led.fwd_on()
+            longpress = False
+            gencatpreview = True
+        
+
         else:
+
             if gencatpreview == True:
                 gencatpreview = False
                 print("Gen cat preview stopped")
