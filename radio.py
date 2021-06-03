@@ -685,7 +685,7 @@ while True:
         if time.time() - previousTime < 0.1: continue
         time.sleep(0.5)
         if longpress:
-            if False:
+            if chromium_running:
                 f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
                 filepath=f.readline()
                 name_prefix=filepath.split(".")[1].split("/")[-1]
@@ -700,19 +700,17 @@ while True:
                 #time.sleep(1.0)
                 recFileName = name_prefix+"comment"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
                 # records with 48000 quality
-                os.system("arecord "+previewaudioguidepath+"/recorded_audio.wav")
-                
+                arecord(previewaudioguidepath, recFileName+".wav")
                 # scan for button press to stop recording
-               # but11.wait_for_press(10) #for test
-               # time.sleep(5)
+                but11.wait_for_press(10)
                 os.system("pkill -9 arecord")
                 os.system("pkill -9 aplay")
                 aplay("Catgen_stop.wav")
                 #time.sleep(1.4)
-                print("Gencat comment recording stopped")
+                print("Gencat recording stopped")
                 #time.sleep(5.0)
-                previewplay(recordingpathcat11, recFileName)
-                os.system("cp "+previewaudioguidepath+"/recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".wav")
+                previewplay(recordingpathcat11, recFileName+".wav")
+                os.system("cp "+previewaudioguidepath+"/"+recFileName+".wav " +recordingpathcat11+"/"+recFileName+".wav")
                 os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
                 os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
                 led.fwd_on()
