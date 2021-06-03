@@ -662,8 +662,7 @@ while True:
         #os.system("pkill -o chromium")
         print("buttons 11 pressed")
         previousTime = time.time()
-        p=False
-
+        
        
         while but11.is_pressed:
             #Check if the button is pressed for > 2sec
@@ -711,7 +710,7 @@ while True:
             longpress = False
             gencatpreview = True
            
-        elif True:
+        elif x:
             f = open("MediaUpload/current_link.txt", "r")
             filepath=f.readline()
             name_prefix=filepath.split(".")[1].split["/"][-1]
@@ -740,7 +739,8 @@ while True:
             led.fwd_on()
             longpress = False
             gencatpreview = True
-        
+            p=False
+            x=False
 
         else:
 
