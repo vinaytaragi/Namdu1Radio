@@ -678,6 +678,7 @@ while True:
                 longpress = True
                 break
                 aplay("beep_catgen.wav")
+                p=False
 
        
         x=True     # if longpress is True, record audio after a 'beep'
