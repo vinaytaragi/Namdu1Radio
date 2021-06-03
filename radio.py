@@ -711,7 +711,7 @@ while True:
             longpress = False
             gencatpreview = True
            
-        elif x:
+        elif True:
             f = open("MediaUpload/current_link.txt", "r")
             filepath=f.readline()
             name_prefix=filepath.split(".")[1].split["/"][-1]
@@ -770,7 +770,7 @@ while True:
                 playpause = True
             # Check whether the internet is available to play from the website
             elif is_connected(remote_server):
-                start_radio_from_internet()                      
+                #start_radio_from_internet()                      
                 playpause = True
             else:
                 print ("Button11 general playback started")
