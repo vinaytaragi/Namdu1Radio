@@ -689,6 +689,7 @@ while True:
                 f = open("/var/www/html/new/MediaUpload/current_link.txt", "r")
                 filepath=f.readline()
                 name_prefix=filepath.split(".")[1].split("/")[-1]
+                f.close()
                 led.fwd_blink("slow")
                 os.system("killall chromium-browser")
 
@@ -709,10 +710,10 @@ while True:
                 #time.sleep(1.4)
                 print("Gencat recording stopped")
                 #time.sleep(5.0)
-                previewplay("./","audio.wav")
-                os.system("cp audio.wav " +recordingpathcat11+"/"+recFileName+".wav")
+                previewplay(".","audio.wav")
+                os.system("cp audio.wav "+recordingpathcat11+"/"+recFileName+".wav")
                 os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
-                os.system("rm "+previewaudioguidepath+"/"+"audio.wav")
+                os.system("rm audio.wav")
                 led.fwd_on()
                 longpress = False
                 gencatpreview = True
