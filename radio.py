@@ -664,7 +664,7 @@ while True:
         previousTime = time.time()
         
        
-        while but11.is_pressed:
+        while p:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
                 if but1.is_pressed or but2.is_pressed or but3.is_pressed \
