@@ -709,7 +709,7 @@ while True:
                 #time.sleep(1.4)
                 print("Gencat recording stopped")
                 #time.sleep(5.0)
-                previewplay("audio.wav")
+                previewplay("./","audio.wav")
                 os.system("cp audio.wav " +recordingpathcat11+"/"+recFileName+".wav")
                 os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
                 os.system("rm "+previewaudioguidepath+"/"+"audio.wav")
