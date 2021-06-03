@@ -692,8 +692,8 @@ while True:
             #aplay("beep_catgen.wav")
             #time.sleep(1.0)
             recFileName = "recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
-            # records with 48000 quality
-            os.system("arecord "+recFileName+".wav")
+            # records with 48000= quality
+            os.system("arecord "+previewaudioguidepath+recFileName+".wav")
             # scan for button press to stop recording
             but11.wait_for_press(30)
             os.system("pkill -9 arecord")
