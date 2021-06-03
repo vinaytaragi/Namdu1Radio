@@ -70,31 +70,31 @@ while True:
         os.system("chromium-browser --kiosk --app=http://"+local_server+" &")        
         cntr = False
         playpause = True
-    #Check whether the internet is available to play from the website
-    # elif is_connected(remote_server) and False:
-    #     print ("starting namma school radio from internet")
-    #     os.system("pkill -9 aplay")
-    #     #time.sleep(3)
-    #     aplay("radiostart.wav")
-    #     os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
-    #     time.sleep(1.0)
-    #     os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
-    #     time.sleep(5.0)
-    #     cntr = False
-        # playpause = True
-    # elif cntr == True:
-    #     print ("Local and remote server not available")
-    #     print ("Audio starts from localhost")
-    #     os.system("pkill -9 aplay")
-    #     src_renamPath = r'/var/www/html/indexgencat.php'
-    #     dst_renamPath = r'/var/www/html/index.php'
-    #     shutil.copy(src_renamPath, dst_renamPath)
-    #     time.sleep(3)
-    #     aplay("radiostart.wav")
-    #     os.system("chromium-browser --kiosk localhost &")
-    #     cntr = False
-    #     playpause = True
-    #     time.sleep(0.2)
+    # #Check whether the internet is available to play from the website
+    elif is_connected(remote_server) and False:
+        print ("starting namma school radio from internet")
+        os.system("pkill -9 aplay")
+        #time.sleep(3)
+        aplay("radiostart.wav")
+        os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
+        time.sleep(1.0)
+        os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
+        time.sleep(5.0)
+        cntr = False
+        playpause = True
+    elif cntr == True:
+        print ("Local and remote server not available")
+        print ("Audio starts from localhost")
+        os.system("pkill -9 aplay")
+        src_renamPath = r'/var/www/html/indexgencat.php'
+        dst_renamPath = r'/var/www/html/index.php'
+        shutil.copy(src_renamPath, dst_renamPath)
+        time.sleep(3)
+        aplay("radiostart.wav")
+        os.system("chromium-browser --kiosk localhost &")
+        cntr = False
+        playpause = True
+        time.sleep(0.2)
     
     ''' if button1 is pressed - Category 1 functionality button '''
     
