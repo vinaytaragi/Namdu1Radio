@@ -703,14 +703,14 @@ while True:
                 os.system("arecord "+previewaudioguidepath+recFileName+".wav")
                 
                 # scan for button press to stop recording
-                but11.wait_for_press(30) #for test
+                but11.wait_for_press(10) #for test
                 os.system("pkill -9 arecord")
                 os.system("pkill -9 aplay")
                 aplay("Catgen_stop.wav")
                 #time.sleep(1.4)
-                print("Gencat recording stopped")
+                print("Gencat comment recording stopped")
                 #time.sleep(5.0)
-                previewplay(recordingpathcat11, "recorded_audio.wav")
+                previewplay(recordingpathcat11, recFileName)
                 os.system("cp "+previewaudioguidepath+"/""recorded_audio.wav " +recordingpathcat11+"/"+recFileName+".wav")
                 os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
                 os.system("rm "+previewaudioguidepath+"/"+recFileName+".wav")
