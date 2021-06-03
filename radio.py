@@ -675,7 +675,7 @@ while True:
                    # shutdownPi()
                    print("hi")
                 # if the button is pressed for more than two seconds, then longpress is True
-                longpress = True
+            #    longpress = True
                 break
                 aplay("beep_catgen.wav")
                 p=False
@@ -719,7 +719,7 @@ while True:
             os.system("killall chromium-browser")
             os.system("pkill -o chromium")
             #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
-            print("Gencat recording started")
+            print("Gencat comment recording started")
             #aplay("beep_catgen.wav")
             #time.sleep(1.0)
             recFileName = name_prefix+"recorded@"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
