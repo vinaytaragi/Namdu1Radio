@@ -32,7 +32,7 @@ function uploadFile(name,fileid) {
   formdata.append('file1', file);
   var d = new Date();
   var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
-    d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+    d.getFullYear() + "_" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
   formdata.append('finalname',name.split('.')[0]+'_comment'+datestring+'.'+file.name.split('.')[1])
   console.log(formdata.get('finalname'));
