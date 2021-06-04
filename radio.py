@@ -738,7 +738,8 @@ while True:
                 # records with 48000 quality
                 print(recFileName)
                 # records with 48000 quality
-                os.system("arecord "+recFileName +" &")
+                arecord(".",recFileName)
+
                 # scan for button press to stop recording
                 but11.wait_for_press(300)
                 os.system("pkill -9 arecord")
