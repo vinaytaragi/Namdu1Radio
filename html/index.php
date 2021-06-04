@@ -56,6 +56,7 @@ for($index=0; $index < count($dirArray); $index++){
 } 
 
 $dirArray=array();
+
 for($i=0;$i<count($filename);$i++){
   //echo(substr($filename[$i],0,-4));
  array_push($dirArray,$filename[$i]);
