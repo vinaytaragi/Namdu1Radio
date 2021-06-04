@@ -658,14 +658,14 @@ while True:
             led10.off()   
     '''upload and backup play functionality'''
     p=True
-    if p:
+    if but11.is_pressed:
         #os.system("killall chromium-browser")
         #os.system("pkill -o chromium")
         print("buttons 11 pressed")
         previousTime = time.time()
         
        
-        while p:
+        while but11.is_pressed:
             #Check if the button is pressed for > 2sec
             if time.time() - previousTime > 2.0:
                 if but1.is_pressed or but2.is_pressed or but3.is_pressed \
@@ -720,7 +720,6 @@ while True:
                 gencatpreview = True
             
         
-                p=False
                
 
                  
@@ -730,6 +729,7 @@ while True:
                 led.fwd_blink("slow")
                 os.system("killall chromium-browser")
                 os.system("pkill -o chromium")
+                chromium_running=False
                 #os.system("pkill -9 aplay") # to stop playing recorded audio (if it was)
                 print("Gencat recording started")
                 #aplay("beep_catgen.wav")
