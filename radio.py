@@ -704,7 +704,7 @@ while True:
                 # records with 48000 quality
                 os.system("arecord "+recFileName +" &")
                 # scan for button press to stop recording
-                but11.wait_for_press(10)
+                but11.wait_for_press(300)
                 os.system("pkill -9 arecord")
                 os.system("pkill -9 aplay")
                 aplay("Catgen_stop.wav")
@@ -740,7 +740,7 @@ while True:
                 # records with 48000 quality
                 os.system("arecord "+recFileName +" &")
                 # scan for button press to stop recording
-                but11.wait_for_press(10)
+                but11.wait_for_press(300)
                 os.system("pkill -9 arecord")
                 os.system("pkill -9 aplay")
                 aplay("Catgen_stop.wav")
@@ -789,7 +789,7 @@ while True:
                 playpause = True
             # Check whether the internet is available to play from the website
             elif is_connected(remote_server):
-                #start_radio_from_internet()                      
+                start_radio_from_internet()                      
                 playpause = True
             else:
                 print ("Button11 general playback started")
@@ -801,6 +801,7 @@ while True:
                 shutil.copy(src_renamPath, dst_renamPath)
                 #Starts playing mp3 from .upload folder
                 print("starting audio form localhost in gencat")
-                os.system("chromium-browser --kiosk localhost &")
+                os.system("chromium-browser --kiosk localhost/new &")
+                chromium_running=True
                 time.sleep(0.2)
                 playpause = True
