@@ -86,9 +86,9 @@ while True:
                     #start converting from .wav to mp3
                     os.system("lame -b 320 "+srcpath+"/"+i+" " +srcpath+"/"+i+".mp3")
                     #copy converted .mp3 to .upload folders
-                    os.system("sudo cp "+srcpath+"/"+i+".mp3 " +dstpath+"/"+i+".mp3")
+                    os.system("sudo cp "+srcpath+"/"+i[:-4]+".mp3 " +dstpath+"/"+i+".mp3")
                     #remove the .wav file
-                    os.system("rm  "+i)
+                    os.system("rm  "+recordingpathcat11+"/"+i)
                 else:
                     print("No .wav fies present for conversion")
 
