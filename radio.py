@@ -778,9 +778,9 @@ while True:
                 os.system("chromium-browser --kiosk --app=http://"+local_server+" &")
                 playpause = True
             # Check whether the internet is available to play from the website
-            elif is_connected(remote_server):
-                start_radio_from_internet()                      
-                playpause = True
+            # elif is_connected(remote_server):
+                # start_radio_from_internet()                      
+                # playpause = True
             else:
                 print ("Button11 general playback started")
                 os.system("pkill -9 aplay")
