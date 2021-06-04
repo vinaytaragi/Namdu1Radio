@@ -55,7 +55,7 @@ print("pi Started")
 #Test folder to verify local backup play
 aplay("lappiready.wav")
 #time.sleep(3.0)
-start_radio_from_internet() 
+
 while True:
     print("pi Running")
     #led.off()
