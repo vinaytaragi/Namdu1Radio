@@ -89,7 +89,7 @@ while True:
                     os.system("sudo cp "+srcpath+"/"+i[:-4]+".mp3 " +dstpath+"/"+i[: -4]+".mp3")
                     #remove the .wav file
                     os.system("rm  "+recordingpathcat11+"/"+i)
-                    os.system("cp "+dstpath+"/"+i[: -4]+".mp3 " "/var/www/html/new/.upload/gencat/"+dstpath+"/"+i[: -4]+".mp3")
+                    os.system("cp "+dstpath+"/"+i[: -4]+".mp3 "+"/var/www/html/new/.upload/gencat/"+dstpath+"/"+i[: -4]+".mp3")
                 else:
                     print("No .wav fies present for conversion")
 
