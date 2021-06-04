@@ -53,7 +53,7 @@
 
      // Sorts files
      //sort($dirArray);
-       rsort($dirArray);//sorting in descendi
+       sort($dirArray);//sorting in descendi
       
       // print($indexCount);
 	
