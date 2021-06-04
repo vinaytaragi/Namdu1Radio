@@ -700,6 +700,7 @@ while True:
                 #aplay("beep_catgen.wav")
                 #time.sleep(1.0)
                 recFileName = name_prefix+"comment"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
+                print(recFileName)
                 # records with 48000 quality
                 os.system("arecord audio.wav &")
                 # scan for button press to stop recording
@@ -751,6 +752,7 @@ while True:
                 led.fwd_on()
                 longpress = False
                 gencatpreview = True
+                p=False
             
         
            
