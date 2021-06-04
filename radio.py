@@ -702,7 +702,7 @@ while True:
                 recFileName = name_prefix+"comment"+datetime.now().strftime('%d%b%Y_%H_%M_%S')
                 print(recFileName)
                 # records with 48000 quality
-                os.system("arecord audio.wav &")
+                os.system("arecord recFileName &")
                 # scan for button press to stop recording
                 but11.wait_for_press(10)
                 os.system("pkill -9 arecord")
@@ -711,10 +711,10 @@ while True:
                 #time.sleep(1.4)
                 print("Gencat recording stopped")
                 #time.sleep(5.0)
-                previewplay(".","audio.wav")
-                os.system("cp audio.wav "+recordingpathcat11+"/"+recFileName+".wav")
+                previewplay(".",recFileName)
+                os.system("cp "+ recFileName+ " " +recordingpathcat11+"/"+recFileName+".wav")
                 os.system("lxterminal -e python "+projectpath+"/Wav2Mp3Convert.py  &")
-                os.system("rm audio.wav")
+                os.system("rm "+recFileName)
                 led.fwd_on()
                 longpress = False
                 gencatpreview = True
