@@ -34,7 +34,7 @@ function uploadFile(name,fileid) {
   var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
     d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
-  formdata.append('finalname',name.split('.')[0]+'comment'+datestring+'.'+file.name.split('.')[1])
+  formdata.append('finalname',name.split('.')[0]+'_comment'+datestring+'.'+file.name.split('.')[1])
   console.log(formdata.get('finalname'));
   var ajax = new XMLHttpRequest();
   ajax.upload.addEventListener('progress', progressHandler, false);
