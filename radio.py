@@ -71,17 +71,17 @@ while True:
         cntr = False
         playpause = True
     # #Check whether the internet is available to play from the website
-    elif is_connected(remote_server) and False:
-        print ("starting namma school radio from internet")
-        os.system("pkill -9 aplay")
-        #time.sleep(3)
-        aplay("radiostart.wav")
-        os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
-        time.sleep(1.0)
-        os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
-        time.sleep(5.0)
-        cntr = False
-        playpause = True
+    # elif is_connected(remote_server) and False:
+    #     print ("starting namma school radio from internet")
+    #     os.system("pkill -9 aplay")
+    #     time.sleep(3)
+    #     aplay("radiostart.wav")
+    #     os.system("chromium-browser --kiosk --app=http://stream.zeno.fm/ghuhx13nf5zuv &")
+    #     time.sleep(1.0)
+    #     os.system('rclone mount gdrive: $HOME/mnt/gdrive &')
+    #     time.sleep(5.0)
+    #     cntr = False
+    #     playpause = True
     elif cntr == True:
         print ("Local and remote server not available")
         print ("Audio starts from localhost")
@@ -657,7 +657,7 @@ while True:
                 playpause = True               
             led10.off()   
     '''upload and backup play functionality'''
-    p=True
+
     if but11.is_pressed:
         #os.system("killall chromium-browser")
         #os.system("pkill -o chromium")
@@ -677,9 +677,9 @@ while True:
                    print("hi")
                 # if the button is pressed for more than two seconds, then longpress is True
                 longpress = True
-                break
+                #break
                 aplay("beep_catgen.wav")
-                p=False
+         
 
    # if longpress is True, record audio after a 'beep'
         if time.time() - previousTime < 0.1: continue
