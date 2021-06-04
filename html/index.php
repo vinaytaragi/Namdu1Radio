@@ -37,7 +37,7 @@
      // $dirArray[]=$entryName;
      //}
  $dirArray=array_diff(scandir("./.upload/gencat/"), array('.', '..'));
- sort($dirArray);
+ rsort($dirArray);
  $filename=array();
  $comments=array();
 for($index=0; $index < count($dirArray); $index++){
